@@ -2,12 +2,13 @@
     <quiz/>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import Quiz from '../components/Quiz.vue';
 
-export default {
+export default Vue.extend({
     name: 'test',
     components: { Quiz },
-};
+});
 
 </script>

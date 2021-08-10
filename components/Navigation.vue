@@ -8,7 +8,7 @@
                 <button class="text-lg font-semibold text-black leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                     type="button"
                     @click="toggleNavbar()">
-                <MenuIcon class="h-5 w-5"/>
+                <!-- <MenuIcon class="h-5 w-5"/> -->
                 </button>
             </div>
             <div v-bind:class="{'hidden': !showMenu, 'flex': showMenu}" class="lg:flex lg:flex-grow items-center">
@@ -18,14 +18,15 @@
     </nav>
 </template>
 
-<script>
-import { MenuIcon } from '@heroicons/vue/solid';
+<script lang="ts">
+import Vue from 'vue'
+// import { MenuIcon } from '@heroicons/vue/solid';
 import RouterLinks from './RouterLinks.vue';
 
-export default {
+export default Vue.extend({
     components: {
         RouterLinks,
-        MenuIcon,
+        //MenuIcon,
     },
     name: 'navigation',
     data() {
@@ -38,5 +39,5 @@ export default {
             this.showMenu = !this.showMenu;
         },
     },
-};
+});
 </script>

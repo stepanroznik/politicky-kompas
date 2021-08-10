@@ -1,0 +1,13 @@
+{
+    "typescript.preferences.quoteStyle": "single",
+    "indentRainbow.ignoreErrorLanguages": [
+        "*"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "files.associations": {
+        "*.env.local": "env",
+        "*.local.env": "env"
+    }
+}
