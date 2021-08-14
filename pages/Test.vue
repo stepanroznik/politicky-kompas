@@ -7,7 +7,7 @@ import Vue from 'vue'
 import Quiz from '../components/Quiz.vue';
 
 export default Vue.extend({
-    name: 'test',
+    name: 'Test',
     components: { Quiz },
 });
 
