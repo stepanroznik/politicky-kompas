@@ -1,16 +1,17 @@
 <template>
-    <div class="home">
-        <compass/>
-    </div>
+  <div class="home">
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  </div>
 </template>
 
-<script>
-import Compass from '@/components/Compass.vue';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import HelloWorld from '../components/HelloWorld.vue';
 
-export default {
-    name: 'Home',
-    components: {
-        Compass,
-    },
-};
+export default defineComponent({
+  name: 'Home',
+  components: {
+    HelloWorld,
+  },
+});
 </script>

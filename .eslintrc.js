@@ -5,11 +5,16 @@ module.exports = {
     },
     extends: [
         'plugin:vue/vue3-essential',
-        '@vue/airbnb',
+        'plugin:vue/vue3-recommended',
+        'plugin:vue/vue3-strongly-recommended',
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
     ],
-    parserOptions: {
-        parser: 'babel-eslint',
-    },
+    plugins: [
+        "@typescript-eslint",
+    ],
+    parser: '@typescript-eslint/parser',
     rules: {
         indent: ['warn', 4],
         'max-len': ['warn', { code: 300, tabWidth: 4 }],
@@ -21,11 +26,4 @@ module.exports = {
         'linebreak-style': 'off',
         'import/extensions': 'off',
     },
-    "settings": {
-        "import/resolver": {
-          "node": {
-            "extensions": [".js", ".jsx", ".ts", ".tsx", '.vue']
-          }
-        }
-      },
-};
+}

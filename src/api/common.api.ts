@@ -31,7 +31,7 @@ export function apiPost({ url, body, headers, query }: IPostParams) {
         method: "POST",
         body: JSON.stringify(body),
         headers: headers || postHeaders,
-        credentials: "include"
+        //credentials: "include"
     })
         .then(jsonBodyOrThrow)
         .catch(e => {
@@ -45,7 +45,7 @@ export function apiGet({ url, headers, query }: IGetParams) {
     const result = fetch(fetchUrl, {
         method: "GET",
         headers: headers,
-        credentials: "include"
+        //credentials: "include"
     })
         .then(jsonBodyOrThrow)
         .catch(e => {

@@ -17,7 +17,7 @@ export default {
                 { name: 'Domů', url: '/' },
                 { name: 'Spustit test', url: '/test' },
                 { name: 'O aplikaci', url: '/about' },
-                { name: 'Přihlásit se', url: '/login' },
+                { name: '/answers', url: '/answers' },
             ],
         };
     },
