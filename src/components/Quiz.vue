@@ -16,7 +16,7 @@
             class="answers flex flex-col sm:max-w-2xl m-auto"
         >
             <button
-                class="border-2 border-solid active:outline-none bg-green-400 text-white hover:bg-green-500 active:bg-green-600 font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none col-al1 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '1') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('1')"
@@ -24,7 +24,7 @@
                 Rozhodně souhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none bg-lime-400 text-white hover:bg-lime-500 active:bg-lime-600 font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('2')"
@@ -32,7 +32,7 @@
                 Spíše souhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none bg-blueGray-400 text-white hover:bg-blueGray-500 active:bg-blueGray-600 font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('3')"
@@ -40,7 +40,7 @@
                 Nemůžu se rozhodnout / nevím
             </button>
             <button
-                class="border-2 border-solid active:outline-none bg-amber-400 text-white hover:bg-amber-500 active:bg-amber-600 font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none col-al4 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '4') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('4')"
@@ -48,7 +48,7 @@
                 Spíše nesouhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none bg-rose-400 text-white hover:bg-rose-500 active:bg-rose-600 font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none col-al5 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '5') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('5')"
