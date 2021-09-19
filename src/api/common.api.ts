@@ -22,7 +22,7 @@ async function jsonBodyOrThrow(r: Response) {
     return body;
 }
 
-export function apiPost({ url, body, headers, query }: IPostParams) {
+export function apiPost({ url, body, headers, query }: IPostParams): Promise<any> {
     const postHeaders = new Headers({
         "Content-Type": "application/json"
     });
@@ -40,7 +40,7 @@ export function apiPost({ url, body, headers, query }: IPostParams) {
     return result;
 }
 
-export function apiGet({ url, headers, query }: IGetParams) {
+export function apiGet({ url, headers, query }: IGetParams): Promise<any> {
     const fetchUrl = generateUrl({ url, query });
     const result = fetch(fetchUrl, {
         method: "GET",

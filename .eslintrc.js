@@ -14,9 +14,10 @@ module.exports = {
     plugins: [
         "@typescript-eslint",
     ],
-    parser: '@typescript-eslint/parser',
+    parser: 'vue-eslint-parser',
     rules: {
         indent: ['warn', 4],
+        'vue/html-indent': ['warn', 4],
         'max-len': ['warn', { code: 300, tabWidth: 4 }],
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

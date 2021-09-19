@@ -6,7 +6,7 @@
 import Quiz from '../components/Quiz.vue';
 
 export default {
-    name: 'test',
+    name: 'Test',
     components: { Quiz },
 };
 

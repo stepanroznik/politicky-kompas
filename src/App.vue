@@ -1,7 +1,7 @@
 <template>
-    <navigation/>
+    <navigation />
     <div class="text-center max-w-5xl m-auto my-4 sm:my-8">
-        <router-view/>
+        <router-view />
     </div>
 </template>
 
