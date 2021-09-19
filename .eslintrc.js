@@ -19,5 +19,13 @@ module.exports = {
         'func-names': 'off',
         'object-shorthand': 'off',
         'linebreak-style': 'off',
+        'import/extensions': 'off',
     },
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx", '.vue']
+          }
+        }
+      },
 };
