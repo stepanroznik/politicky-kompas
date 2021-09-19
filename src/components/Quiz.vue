@@ -1,13 +1,13 @@
 <template>
-    <div class="">
+    <div v-if="questions?.length">
         <div class="question lg:border rounded lg:border-gray-300 p-2 sm:p-4 mb-4 sm:mb-8 h-52 2xs:h-44 xs:h-36 lg:h-32 overflow-y-auto">
             <h2 class="text-base xs:text-lg font-medium py-2">
-                {{ currentQuestion.heading }}
+                {{ currentQuestion.title }}
             </h2>
             <div class="text-sm xs:text-base flex flex-row items-stretch">
                 <span class="bg-gray-300 rounded-sm w-2 mr-2 my-1" />
                 <h3 class="flex-1 text-left">
-                    {{ currentQuestion.subheading }}
+                    {{ currentQuestion.subtitle }}
                 </h3>
             </div>
         </div>
@@ -96,134 +96,14 @@
 </template>
 
 <script>
+import { apiGet } from '@/api';
 
 export default {
     name: 'Compass',
     data() {
         return {
             currentQuestionIndex: 0,
-            questions: [
-                {
-                    id: 1,
-                    heading: 'ČR by měla usilovat o mezinárodní zákaz autonomních zbraní.',
-                    subheading: 'Autonomní (samořídící se) zbraň je například ozbrojený dron vybavený umělou inteligencí, který dokáže samostatně vyhledávat a zabíjet lidi dle předem definovaných kritérií.',
-                },
-                {
-                    id: 2,
-                    heading: 'Podporuji tzv. rouškovné pro důchodce.',
-                    subheading: 'Vláda navrhuje pro všechny důchodce jednorázový příspěvek 5000 Kč (verze z počátku září), který by měl dle jejích slov kompenzovat stres spojený s epidemií nového koronaviru. To by odpovídalo jednorázovému výdaji zhruba 18 miliard ze státního rozpočtu.',
-                },
-                {
-                    id: 3,
-                    heading: 'Chci X.',
-                    subheading: 'X je písmeno.',
-                },
-                {
-                    id: 4,
-                    heading: 'Chci Y.',
-                    subheading: 'Y je písmeno.',
-                },
-                {
-                    id: 5,
-                    heading: 'Chci Z.',
-                    subheading: 'Z je písmeno.',
-                },
-                {
-                    id: 6,
-                    heading: 'Chci A.',
-                    subheading: 'A je písmeno.',
-                },
-                {
-                    id: 7,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 8,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 9,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 10,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 11,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 12,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 13,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 14,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 15,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 16,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 17,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 18,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 19,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 20,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 21,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 22,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 23,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-                {
-                    id: 24,
-                    heading: 'Chci B.',
-                    subheading: 'B je písmeno.',
-                },
-            ],
+            questions: [],
         };
     },
     computed: {
@@ -247,6 +127,9 @@ export default {
             return false;
         },
     },
+    async created() {
+        this.questions = await apiGet({ url: 'questions'} );
+    },
     methods: {
         answerQuestion(answer) {
             this.$store.commit('answerQuestion', { questionId: this.currentQuestion.id, answer });
@@ -265,5 +148,50 @@ export default {
 <style scoped>
     .progress-bar {
         transition: width 0.5s;
+    }
+    .col-al1 {
+        background-color: hsl(0, 80%, 60%);
+    }
+    .col-al1:hover {
+        background-color: hsl(0, 80%, 50%);
+    }
+    .col-al1:active {
+        background-color: hsl(0, 80%, 40%);
+    }
+    .col-al2 {
+        background-color: hsl(20, 80%, 60%);
+    }
+    .col-al2:hover {
+        background-color: hsl(20, 80%, 50%);
+    }
+    .col-al2:active {
+        background-color: hsl(20, 80%, 40%);
+    }
+    .col-al3 {
+        background-color: hsl(0, 0%, 60%);
+    }
+    .col-al3:hover {
+        background-color: hsl(0, 0%, 50%);
+    }
+    .col-al3:active {
+        background-color: hsl(0, 0%, 40%);
+    }
+    .col-al4 {
+        background-color: hsl(80, 80%, 60%);
+    }
+    .col-al4:hover {
+        background-color: hsl(80, 80%, 50%);
+    }
+    .col-al4:active {
+        background-color: hsl(80, 80%, 40%);
+    }
+    .col-al5 {
+        background-color: hsl(100, 80%, 60%);
+    }
+    .col-al5:hover {
+        background-color: hsl(100, 80%, 50%);
+    }
+    .col-al5:active {
+        background-color: hsl(100, 80%, 40%);
     }
 </style>
