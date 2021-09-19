@@ -15,6 +15,10 @@ module.exports = {
         "@typescript-eslint",
     ],
     parser: 'vue-eslint-parser',
+    parserOptions: {
+        parser: 'babel-eslint',
+        ecmaVersion: 6
+    },
     rules: {
         indent: ['warn', 4],
         'vue/html-indent': ['warn', 4],
@@ -26,5 +30,6 @@ module.exports = {
         'object-shorthand': 'off',
         'linebreak-style': 'off',
         'import/extensions': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
     },
 }

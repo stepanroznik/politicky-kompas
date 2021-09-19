@@ -8,6 +8,7 @@ export interface IGetParams extends IUrlParams {
 }
 
 export interface IPostParams extends IUrlParams {
+    method?: 'POST' | 'PUT'
     body?: any;
     headers?: any;
 }

@@ -22,13 +22,13 @@ async function jsonBodyOrThrow(r: Response) {
     return body;
 }
 
-export function apiPost({ url, body, headers, query }: IPostParams): Promise<any> {
+export function apiPost({ url, body, headers, query, method = 'POST' }: IPostParams): Promise<any> {
     const postHeaders = new Headers({
         "Content-Type": "application/json"
     });
     const fetchUrl = generateUrl({ url, query });
     const result = fetch(fetchUrl, {
-        method: "POST",
+        method,
         body: JSON.stringify(body),
         headers: headers || postHeaders,
         //credentials: "include"
