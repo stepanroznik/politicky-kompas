@@ -16,7 +16,7 @@
             class="answers flex flex-col sm:max-w-2xl m-auto"
         >
             <button
-                class="border-2 border-solid active:outline-none col-al1 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none answer col-al5 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '1') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('1')"
@@ -24,7 +24,7 @@
                 Rozhodně souhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none answer col-al4 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('2')"
@@ -32,7 +32,7 @@
                 Spíše souhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('3')"
@@ -40,7 +40,7 @@
                 Nemůžu se rozhodnout / nevím
             </button>
             <button
-                class="border-2 border-solid active:outline-none col-al4 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none answer col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '4') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('4')"
@@ -48,7 +48,7 @@
                 Spíše nesouhlasím
             </button>
             <button
-                class="border-2 border-solid active:outline-none col-al5 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-3 rounded mb-1 ease-linear transition-all duration-150"
+                class="border-2 border-solid active:outline-none answer col-al1 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '5') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
                 @click="answerQuestion('5')"
@@ -149,14 +149,17 @@ export default {
     .progress-bar {
         transition: width 0.5s;
     }
+    .answer {
+        @apply opacity-85
+    }
     .col-al1 {
-        background-color: hsl(0, 80%, 60%);
+        background-color: hsl(5, 80%, 60%);
     }
     .col-al1:hover {
-        background-color: hsl(0, 80%, 50%);
+        background-color: hsl(5, 80%, 50%);
     }
     .col-al1:active {
-        background-color: hsl(0, 80%, 40%);
+        background-color: hsl(5, 80%, 45%);
     }
     .col-al2 {
         background-color: hsl(20, 80%, 60%);
@@ -165,7 +168,7 @@ export default {
         background-color: hsl(20, 80%, 50%);
     }
     .col-al2:active {
-        background-color: hsl(20, 80%, 40%);
+        background-color: hsl(20, 80%, 45%);
     }
     .col-al3 {
         background-color: hsl(0, 0%, 60%);
@@ -174,24 +177,24 @@ export default {
         background-color: hsl(0, 0%, 50%);
     }
     .col-al3:active {
-        background-color: hsl(0, 0%, 40%);
+        background-color: hsl(0, 0%, 45%);
     }
     .col-al4 {
-        background-color: hsl(80, 80%, 60%);
+        background-color: hsl(80, 80%, 45%);
     }
     .col-al4:hover {
-        background-color: hsl(80, 80%, 50%);
-    }
-    .col-al4:active {
         background-color: hsl(80, 80%, 40%);
     }
+    .col-al4:active {
+        background-color: hsl(80, 80%, 35%);
+    }
     .col-al5 {
-        background-color: hsl(100, 80%, 60%);
+        background-color: hsl(100, 80%, 45%);
     }
     .col-al5:hover {
-        background-color: hsl(100, 80%, 50%);
+        background-color: hsl(100, 80%, 40%);
     }
     .col-al5:active {
-        background-color: hsl(100, 80%, 40%);
+        background-color: hsl(100, 80%, 35%);
     }
 </style>

@@ -11,11 +11,6 @@ module.exports = {
         },
     },
     theme: {
-        colors: {
-            ...colors,
-            current: 'current',
-            transparent: 'transparent',
-        },
         extend: {
             gridTemplateRows: {
                 20: 'repeat(20, minmax(0, 1fr))',
@@ -29,6 +24,9 @@ module.exports = {
                 xs: '480px',
                 '2xs': '360px',
             },
+            opacity: {
+                '85': '0.85'
+            }
         },
     },
     variants: [

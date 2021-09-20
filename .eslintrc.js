@@ -16,7 +16,7 @@ module.exports = {
     ],
     parser: 'vue-eslint-parser',
     parserOptions: {
-        parser: 'babel-eslint',
+        parser: '@typescript-eslint/parser',
         ecmaVersion: 6
     },
     rules: {
@@ -30,6 +30,9 @@ module.exports = {
         'object-shorthand': 'off',
         'linebreak-style': 'off',
         'import/extensions': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
+        'no-extra-boolean-cast': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'vue/max-attributes-per-line': ['warn', 3],
     },
 }
