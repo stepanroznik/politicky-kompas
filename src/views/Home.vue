@@ -1,6 +1,8 @@
 <template>
-    <div class="home">
+    <div class="grid grid-main">
+        <div>Info 1 </div>
         <compass />
+        <div>Info 2</div>
     </div>
 </template>
 
@@ -15,3 +17,16 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+.grid-main {
+        grid-template-rows: 1fr 2fr 1fr;
+        grid-template-columns: none
+    }
+@media (min-width: 640px) {
+    .grid-main {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: none
+    }
+}
+</style>

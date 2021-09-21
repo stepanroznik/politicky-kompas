@@ -76,9 +76,10 @@
                 </span>
                 <span class="text-sm text-gray-300">
                     <button
+                        v-if="!isCurrentQuestionLast"
                         class="p-1 border border-transparent active:outline-none rounded"
                         :class="{'hover:border-gray-400 text-gray-600': isCurrentQuestionAnswered && !isCurrentQuestionLast}"
-                        :disabled="!isCurrentQuestionAnswered || isCurrentQuestionLast"
+                        :disabled="!isCurrentQuestionAnswered"
                         @click="goToNextQuestion"
                     >
                         další &gt;
@@ -115,15 +116,15 @@ export default {
             if (this.currentQuestionIndex + 1 >= this.questions.length) return true;
             return false;
         },
-        isCurrentQuestionAnswered() {
-            if (this.$store.state.answers.find((x) => x.id === this.currentQuestion.id)?.answer) return true;
-            return false;
-        },
         currentQuestion() {
             return this.questions[this.currentQuestionIndex];
         },
+        isCurrentQuestionAnswered() {
+            if (this.$store.state.answers.find((x) => x.Question.id === this.currentQuestion.id)?.agreeLevel) return true;
+            return false;
+        },
         currentQuestionAnswer() {
-            if (this.isCurrentQuestionAnswered) return this.$store.state.answers.find((x) => x.id === this.currentQuestion.id)?.answer;
+            if (this.isCurrentQuestionAnswered) return this.$store.state.answers.find((x) => x.Question.id === this.currentQuestion.id)?.agreeLevel;
             return false;
         },
     },
@@ -131,15 +132,18 @@ export default {
         this.questions = await apiGet({ url: 'questions'} );
     },
     methods: {
-        answerQuestion(answer) {
-            this.$store.commit('answerQuestion', { questionId: this.currentQuestion.id, answer });
-            if (this.currentQuestionIndex + 1 < this.questions.length) this.currentQuestionIndex += 1;
-        },
         goToPreviousQuestion() {
             if (!this.isCurrentQuestionFirst) this.currentQuestionIndex -= 1;
         },
         goToNextQuestion() {
-            if (this.isCurrentQuestionAnswered && !this.isCurrentQuestionLast) this.currentQuestionIndex += 1;
+            if (this.isCurrentQuestionAnswered && !this.isCurrentQuestionLast) return this.currentQuestionIndex += 1;
+            if (this.isCurrentQuestionLast) {
+                this.$store.commit('completeQuiz');
+            }
+        },
+        answerQuestion(agreeLevel) {
+            this.$store.commit('answerQuestion', { Question: {id: this.currentQuestion.id, position: this.currentQuestion.position }, agreeLevel });
+            this.goToNextQuestion()
         },
     },
 };

@@ -1,6 +1,17 @@
 <template>
-    <div class="grid grid-main">
-        Nějaký text
+    <div class="relative border-4 border-gray-400 rounded">
+        <axis-label class="absolute -top-6 left-1/2 z-10 transform -translate-x-1/2">
+            Autoritářsví
+        </axis-label>
+        <axis-label class="absolute -bottom-6 left-1/2 z-10 transform -translate-x-1/2">
+            Libertariánství/osobní svoboda
+        </axis-label>
+        <axis-label class="absolute left-0 top-1/2 z-10 -mt-4 transform sm:-translate-x-1/2">
+            Levice
+        </axis-label>
+        <axis-label class="absolute right-0 top-1/2 z-10 -mt-4 transform sm:translate-x-1/2">
+            Pravice
+        </axis-label>
         <div class="grid grid-rows-10 grid-cols-10 w-full h-full border border-white">
             <template
                 v-for="x in 10"
@@ -17,84 +28,64 @@
                             w-full
                             h-full
                             equal-height
-                            hover:scale-125
+                            not-hover:scale-110
                             transform
                             hover:z-10
-                            hover:border-2
-                            hover:-my-px
+                            not-hover:border-2
+                            not-hover:-my-px
                             transition-all
                         "
                         :class="{
-                            'square-red' : x <= 5 && y <= 5, 'square-blue' : x <= 5 && y > 5, 'square-green': x > 5 && y <= 5, 'square-yellow' : x > 5 && y > 5 }"
+                            'square-red' : x <= 5 && y <= 5, 'square-blue' : x <= 5 && y > 5, 'square-green': x > 5 && y <= 5, 'square-yellow' : x > 5 && y > 5, 'z-30': user && y === user.leftRight + 6 && x === user.topBottom + 6 }"
                     >   <template
-                        v-for="party in parties"
-                        :key="party.id"
-                    >
+                            v-for="party in parties"
+                            :key="party.id"
+                        >
+                            <span
+                                v-if="y === party.leftRight + 6 && x === party.topBottom + 6"
+                                class="h-full w-full absolute block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
+                                :style="{backgroundImage: `url(https://data.programydovoleb.cz/${party.logo})`}"
+                            />    
+                        </template>
                         <span
-                            v-if="y === party.leftRight + 6 && x === party.topBottom + 6"
-                            class="h-full w-full z-20 absolute block bg-contain border-2 rounded-md bg-white transform transition-transform duration-150 hover:duration-300 scale-90 hover:scale-150"
-                            :style="{backgroundImage: `url(https://data.programydovoleb.cz/${party.logo})`}"
-                        />    
-                    </template>
+                            v-if="user && y === user.leftRight + 6 && x === user.topBottom + 6"
+                            class="h-full w-full absolute block bg-contain transform -translate-y-1 transition-all duration-150 hover:duration-300 z-30 scale-90 hover:scale-150 hover:-translate-y-4"
+                            :style="{backgroundImage: `url(${locationMarker})`}"
+                        />  
                     </span>
                 </template>
             </template>
         </div>
-        <div>Info 2</div>
     </div>
 </template>
 
-<script lang="ts">
-import { apiGet } from "@/api";
-import { defineComponent } from "vue";
+<script lang='ts'>
+import { defineComponent } from 'vue';
 import axios from 'axios';
-
-function getPartyOrientation(party: any) {
-    const leftRightAnswers: any = [];
-    const topBottomAnswers: any = [];
-    party.Answers.forEach((answer: any) => {
-        const agreeLevel = (answer.agreeLevel - 3) * 2.5;
-        switch (answer.Question.position) {
-        case "left":
-            leftRightAnswers.push(agreeLevel * -1);
-            break;
-        case "right":
-            leftRightAnswers.push(agreeLevel);
-            break;
-        case "top":
-            topBottomAnswers.push(agreeLevel * -1);
-            break;
-        case "bottom":
-            topBottomAnswers.push(agreeLevel);
-            break;
-        }
-    });
-
-    const lr = leftRightAnswers.reduce((a: any, b: any) => a + b, 0) / leftRightAnswers.length;
-    const tb = topBottomAnswers.reduce((a: any, b: any) => a + b, 0) / topBottomAnswers.length;
-    const leftRight = Math.floor(lr)
-    const topBottom = Math.floor(tb)
-
-    console.log("party", party.abbreviation, "leftRight:", leftRight, "topBottom:", topBottom);
-
-    return { leftRight, topBottom }
-}
+import AxisLabel from './AxisLabel.vue';
+import { getPartyOrientation } from '@/utils/calculations';
+import locationMarker from '../assets/locationMarker.svg'
 
 export default defineComponent({
     name: "Compass",
+    components: { AxisLabel },
     data: function() {
         return {
-            parties: [] as any[]
+            parties: [] as any[],
+            user: null as any,
+            locationMarker,
         };
     },
     computed: {},
     async created() {
-        this.parties = await apiGet({ url: "parties" , query: { 'include-answers': true }});
-        this.parties = this.parties.map( party => {
-            return { ...party, ...getPartyOrientation(party) }
-        } )
-        console.log(this.parties)
+        this.parties = (this as any).$store.state.parties
         await this.getPartiesDetail()
+        console.log((this as any).$store.state.quizCompleted)
+        if ((this as any).$store.state.quizCompleted) {
+            const answers = (this as any).$store.state.answers;
+            this.user = getPartyOrientation(answers)
+            console.log('User orientation:', this.user)
+        }
     },
     methods: {
         async getPartiesDetail() {
@@ -118,14 +109,6 @@ export default defineComponent({
 <style scoped>
 .equal-height {
     padding-bottom: calc(100% - 2px);
-}
-.grid-main {
-        grid-template-rows: 1fr 2fr 1fr;
-    }
-@media (min-width: 640px) {
-    .grid-main {
-        grid-template-columns: 1fr 2fr 1fr;
-    }
 }
 
 .square-red {

@@ -8,15 +8,23 @@ const vuexLocal = new VuexPersistence({
 export default createStore({
     state: {
         answers: [] as any,
+        parties: [] as any,
+        quizCompleted: false as boolean
     },
     mutations: {
         // if a question has been answered before, the new answer replaces the previous one, otherwise another answer is added to the state.answers object
-        answerQuestion(state, { questionId, answer }) {
-            const answerIndex: number = state.answers.findIndex((x: any) => x.id === questionId);
-            console.log('ans. index:', answerIndex);
-            if (answerIndex === -1) state.answers.push({ id: questionId, answer });
-            else state.answers[answerIndex].answer = answer;
+        answerQuestion(state, { Question, agreeLevel }) {
+            const answerIndex: number = state.answers.findIndex((x: any) => x.Question?.id === Question.id);
+            if (answerIndex === -1) state.answers.push({ Question, agreeLevel });
+            else state.answers[answerIndex].agreeLevel = agreeLevel;
         },
+        setParties(state, parties) {
+            state.parties = parties
+        },
+        completeQuiz(state) {
+            state.quizCompleted = true
+            console.log('quiz completed')
+        }
     },
     actions: {
     },
