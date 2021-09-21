@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-const colors = require('tailwindcss/colors');
-
 module.exports = {
     purge: {
         enabled: false,
@@ -25,7 +21,11 @@ module.exports = {
                 '2xs': '360px',
             },
             opacity: {
-                '85': '0.85'
+                '85': '0.85',
+            },
+            scale: {
+                '175': '1.75',
+                '200': '2',
             }
         },
     },

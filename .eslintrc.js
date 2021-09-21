@@ -33,6 +33,5 @@ module.exports = {
         'no-extra-boolean-cast': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
-        'vue/max-attributes-per-line': ['warn', 3],
     },
 }

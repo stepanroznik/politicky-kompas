@@ -17,17 +17,17 @@
         >
             <button
                 class="border-2 border-solid active:outline-none answer col-al5 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '1') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '5') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
-                @click="answerQuestion('1')"
+                @click="answerQuestion('5')"
             >
                 Rozhodně souhlasím
             </button>
             <button
                 class="border-2 border-solid active:outline-none answer col-al4 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '4') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
-                @click="answerQuestion('2')"
+                @click="answerQuestion('4')"
             >
                 Spíše souhlasím
             </button>
@@ -41,17 +41,17 @@
             </button>
             <button
                 class="border-2 border-solid active:outline-none answer col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '4') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
-                @click="answerQuestion('4')"
+                @click="answerQuestion('2')"
             >
                 Spíše nesouhlasím
             </button>
             <button
                 class="border-2 border-solid active:outline-none answer col-al1 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '5') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '1') ? 'border-dashed border-gray-500' : 'border-transparent'"
                 type="button"
-                @click="answerQuestion('5')"
+                @click="answerQuestion('1')"
             >
                 Rozhodně nesouhlasím
             </button>
