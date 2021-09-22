@@ -63,7 +63,7 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 import AxisLabel from './AxisLabel.vue';
-import { getPartyOrientation } from '@/utils/calculations';
+import { getPartyAgreePercentage, getPartyOrientation } from '@/utils/calculations';
 import locationMarker from '../assets/locationMarker.svg'
 
 export default defineComponent({
@@ -100,6 +100,11 @@ export default defineComponent({
                 console.log(partyExternal.logo);
                 this.parties[partyIndex].color = partyExternal.color;
                 this.parties[partyIndex].logo = partyExternal.logo;
+
+                if ((this as any).$store.state.quizCompleted) {
+                    const pp = getPartyAgreePercentage(party.Answers, (this as any).$store.state.answers)
+                    console.log(party.name, pp, '%')
+                }
             })
         }
     }
