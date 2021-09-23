@@ -1,12 +1,13 @@
 <template>
     <div class="grid grid-main">
         <div>Info 1 </div>
-        <compass />
+        <compass :parties="parties" />
         <div>Info 2</div>
     </div>
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue';
 import Compass from '../components/Compass.vue';
 
@@ -15,6 +16,30 @@ export default defineComponent({
     components: {
         Compass,
     },
+    data: function() {
+        return {
+            parties: [] as any[],
+        }},
+    async created() {
+        this.parties = (this as any).$store.state.parties
+        await this.getPartiesDetail()
+    },
+    methods: {
+        async getPartiesDetail() {
+            const partiesExternal = (
+                await axios.get(
+                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
+                )
+            ).data.list;
+            this.parties.forEach(party => {
+                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
+                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
+                console.log(partyExternal.logo);
+                this.parties[partyIndex].color = partyExternal.color;
+                this.parties[partyIndex].logo = partyExternal.logo;
+            })
+        }
+    }
 });
 </script>
 

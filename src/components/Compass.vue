@@ -61,53 +61,34 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue';
-import axios from 'axios';
 import AxisLabel from './AxisLabel.vue';
-import { getPartyAgreePercentage, getPartyOrientation } from '@/utils/calculations';
+import { getPartyOrientation } from '@/utils/calculations';
 import locationMarker from '../assets/locationMarker.svg'
 
 export default defineComponent({
     name: "Compass",
     components: { AxisLabel },
+    props: {
+        parties: {
+            type: Object,
+            required: true,
+        }
+    },
     data: function() {
         return {
-            parties: [] as any[],
             user: null as any,
             locationMarker,
         };
     },
     computed: {},
     async created() {
-        this.parties = (this as any).$store.state.parties
-        await this.getPartiesDetail()
-        console.log((this as any).$store.state.quizCompleted)
         if ((this as any).$store.state.quizCompleted) {
             const answers = (this as any).$store.state.answers;
             this.user = getPartyOrientation(answers)
             console.log('User orientation:', this.user)
         }
     },
-    methods: {
-        async getPartiesDetail() {
-            const partiesExternal = (
-                await axios.get(
-                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
-                )
-            ).data.list;
-            this.parties.forEach(party => {
-                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
-                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
-                console.log(partyExternal.logo);
-                this.parties[partyIndex].color = partyExternal.color;
-                this.parties[partyIndex].logo = partyExternal.logo;
-
-                if ((this as any).$store.state.quizCompleted) {
-                    const pp = getPartyAgreePercentage(party.Answers, (this as any).$store.state.answers)
-                    console.log(party.name, pp, '%')
-                }
-            })
-        }
-    }
+    methods: {}
 });
 </script>
 

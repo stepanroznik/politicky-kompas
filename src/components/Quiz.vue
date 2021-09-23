@@ -100,7 +100,7 @@
 import { apiGet } from '@/api';
 
 export default {
-    name: 'Compass',
+    name: 'Quiz',
     data() {
         return {
             currentQuestionIndex: 0,
@@ -130,19 +130,39 @@ export default {
     },
     async created() {
         this.questions = await apiGet({ url: 'questions'} );
+        const q = parseInt(this.$route.query.q)
+        if (q > 0 && q <= this.questions.length) {
+            if (this.$store.state.answers.length >= q - 1) {
+                this.currentQuestionIndex = q - 1
+                return
+            }
+        }
+        this.setCurrentQuestionQuery()
+        
     },
     methods: {
-        goToPreviousQuestion() {
-            if (!this.isCurrentQuestionFirst) this.currentQuestionIndex -= 1;
+        async setCurrentQuestionQuery() {
+            await this.$router.push({ query: { q: this.currentQuestionIndex + 1 } })
         },
-        goToNextQuestion() {
-            if (this.isCurrentQuestionAnswered && !this.isCurrentQuestionLast) return this.currentQuestionIndex += 1;
-            if (this.isCurrentQuestionLast) {
-                this.$store.commit('completeQuiz');
+        goToPreviousQuestion() {
+            if (!this.isCurrentQuestionFirst) {
+                this.currentQuestionIndex -= 1;
+                this.setCurrentQuestionQuery()
             }
         },
-        answerQuestion(agreeLevel) {
-            this.$store.commit('answerQuestion', { Question: {id: this.currentQuestion.id, position: this.currentQuestion.position }, agreeLevel });
+        async goToNextQuestion() {
+            if (this.isCurrentQuestionAnswered && !this.isCurrentQuestionLast) {
+                this.currentQuestionIndex += 1;
+                this.setCurrentQuestionQuery()
+                return 
+            }
+            if (this.isCurrentQuestionLast) {
+                await this.$store.commit('completeQuiz');
+                await this.$router.push({ name: 'Result' })
+            }
+        },
+        async answerQuestion(agreeLevel) {
+            await this.$store.commit('answerQuestion', { Question: {id: this.currentQuestion.id, position: this.currentQuestion.position }, agreeLevel });
             this.goToNextQuestion()
         },
     },

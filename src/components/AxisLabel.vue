@@ -8,7 +8,7 @@
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
-    name: "Compass",
+    name: "AxisLabel",
 
 })
 </script>
