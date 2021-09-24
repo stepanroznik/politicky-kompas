@@ -92,7 +92,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .equal-height {
     padding-bottom: calc(100% - 2px);
 }

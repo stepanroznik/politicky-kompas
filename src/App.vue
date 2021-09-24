@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="postcss">
     body {
         overflow-y: scroll;
     }

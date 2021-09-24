@@ -169,7 +169,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
     .progress-bar {
         transition: width 0.5s;
     }

@@ -43,7 +43,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .grid-main {
         grid-template-rows: 1fr 2fr 1fr;
         grid-template-columns: none
