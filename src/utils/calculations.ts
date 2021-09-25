@@ -16,6 +16,22 @@ export const getPartyOrientation = (answers: any) => {
         case "bottom":
             topBottomAnswers.push(agreeLevel);
             break;
+        case "top-left":
+            topBottomAnswers.push(agreeLevel * -1);
+            leftRightAnswers.push(agreeLevel * -1);
+            break;
+        case "top-right":
+            topBottomAnswers.push(agreeLevel * -1);
+            leftRightAnswers.push(agreeLevel);
+            break;
+        case "bottom-left":
+            topBottomAnswers.push(agreeLevel);
+            leftRightAnswers.push(agreeLevel * -1);
+            break;
+        case "bottom-right":
+            topBottomAnswers.push(agreeLevel);
+            leftRightAnswers.push(agreeLevel);
+            break;
         }
     });
 
@@ -34,9 +50,13 @@ export const getPartyAgreePercentage = (partyAnswers: any, userAnwers: any): num
 
     partyAnswers.forEach((partyAnswer: any) => {
         const userAnswer = userAnwers.find((a: any) => a.Question.id === partyAnswer.Question.id)
-        const disagreeLevel = Math.abs(partyAnswer.agreeLevel - userAnswer.agreeLevel)
-        differences.push(disagreeLevel)
+        if (userAnswer.agreeLevel != 0) {
+            const disagreeLevel = Math.abs(partyAnswer.agreeLevel - userAnswer.agreeLevel)
+            differences.push(disagreeLevel)
+        }
     });
+
+    if (!differences.length) return 0
 
     const disagreeTotal = differences.reduce((a: any, b: any) => a + b, 0) / differences.length
     const AgreePercentage = Math.round((100 - disagreeTotal * 25) * 100) / 100

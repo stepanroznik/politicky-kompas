@@ -1,5 +1,7 @@
 <template>
-    <quiz />
+    <div class="max-w-5xl">
+        <quiz />
+    </div>
 </template>
 
 <script>

@@ -31,14 +31,24 @@
             >
                 Spíše souhlasím
             </button>
-            <button
-                class="border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
-                type="button"
-                @click="answerQuestion('3')"
-            >
-                Nemůžu se rozhodnout / nevím
-            </button>
+            <div class="flex flex-col xs:flex-row xs:gap-1 sm:flex-row sm:gap-1">
+                <button
+                    class="flex-1 border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
+                    :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                    type="button"
+                    @click="answerQuestion('3')"
+                >
+                    Neutrální
+                </button>
+                <button
+                    class="flex-1 border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
+                    :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '0') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                    type="button"
+                    @click="answerQuestion('0')"
+                >
+                    Nevím
+                </button>
+            </div>
             <button
                 class="border-2 border-solid active:outline-none answer col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"

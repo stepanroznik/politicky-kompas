@@ -1,15 +1,15 @@
 <template>
     <div class="relative border-4 border-gray-400 rounded">
-        <axis-label class="absolute -top-6 left-1/2 z-10 transform -translate-x-1/2">
-            Autoritářsví
+        <axis-label class="absolute -top-6 left-1/2 z-20 transform -translate-x-1/2">
+            Autoritářství
         </axis-label>
-        <axis-label class="absolute -bottom-6 left-1/2 z-10 transform -translate-x-1/2">
+        <axis-label class="absolute -bottom-6 left-1/2 z-20 transform -translate-x-1/2">
             Libertariánství/osobní svoboda
         </axis-label>
-        <axis-label class="absolute left-0 top-1/2 z-10 -mt-4 transform sm:-translate-x-1/2">
+        <axis-label class="absolute left-0 top-1/2 z-20 -mt-4 transform sm:-translate-x-1/2">
             Levice
         </axis-label>
-        <axis-label class="absolute right-0 top-1/2 z-10 -mt-4 transform sm:translate-x-1/2">
+        <axis-label class="absolute right-0 top-1/2 z-20 -mt-4 transform sm:translate-x-1/2">
             Pravice
         </axis-label>
         <div class="grid grid-rows-10 grid-cols-10 w-full h-full border border-white">
@@ -36,7 +36,7 @@
                             transition-all
                         "
                         :class="{
-                            'square-red' : x <= 5 && y <= 5, 'square-blue' : x <= 5 && y > 5, 'square-green': x > 5 && y <= 5, 'square-yellow' : x > 5 && y > 5, 'z-30': user && y === user.leftRight + 6 && x === user.topBottom + 6 }"
+                            'square-red' : x <= 5 && y <= 5, 'square-blue' : x <= 5 && y > 5, 'square-green': x > 5 && y <= 5, 'square-yellow' : x > 5 && y > 5, 'not-z-30': user && y === user.leftRight + 6 && x === user.topBottom + 6 }"
                     >   <template
                             v-for="party in parties"
                             :key="party.id"

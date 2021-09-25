@@ -1,9 +1,9 @@
 <template>
     <navigation />
-    <div class="text-center max-w-5xl m-auto my-4 sm:my-8">
+    <div class="text-center max-w-5xl m-auto mt-6 sm:mt-12 px-2">
         <router-view v-if="$store.state.parties?.length" />
         <div v-else>
-            Načítání
+            Načítání...
         </div>
     </div>
 </template>

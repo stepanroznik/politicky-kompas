@@ -1,8 +1,15 @@
 <template>
     <div class="grid grid-main">
-        <div>Info 1 </div>
         <compass :parties="parties" />
-        <div>Info 2</div>
+        <div>
+            <span>
+                Test jste již dříve vyplnili. 
+                <a href="#" class="border-b border-gray-800" @click="$router.push('/result')">
+                    Zobrazit výsledek
+                </a>
+                ?
+            </span>
+        </div>
     </div>
 </template>
 
@@ -45,12 +52,12 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 .grid-main {
-        grid-template-rows: 1fr 2fr 1fr;
+        grid-template-rows: 1fr 1fr;
         grid-template-columns: none
     }
 @media (min-width: 640px) {
     .grid-main {
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 1fr 1fr;
         grid-template-rows: none
     }
 }
