@@ -4,7 +4,11 @@
         <div>
             <span>
                 Test jste již dříve vyplnili. 
-                <a href="#" class="border-b border-gray-800" @click="$router.push('/result')">
+                <a
+                    href="#"
+                    class="border-b border-gray-800"
+                    @click="$router.push('/result')"
+                >
                     Zobrazit výsledek
                 </a>
                 ?
@@ -41,7 +45,6 @@ export default defineComponent({
             this.parties.forEach(party => {
                 const partyIndex = this.parties.findIndex((p) => p.id === party.id);
                 const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
-                console.log(partyExternal.logo);
                 this.parties[partyIndex].color = partyExternal.color;
                 this.parties[partyIndex].logo = partyExternal.logo;
             })

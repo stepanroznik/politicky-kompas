@@ -40,7 +40,7 @@ export const getPartyOrientation = (answers: any) => {
     const leftRight = Math.floor(lr)
     const topBottom = Math.floor(tb)
 
-    console.log("leftRight:", leftRight, "topBottom:", topBottom);
+    console.log("leftRight:", leftRight, lr, "topBottom:", topBottom, tb);
 
     return { leftRight, topBottom }
 }

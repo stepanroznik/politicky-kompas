@@ -4,8 +4,12 @@
             <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start px-4">
                 <router-link
                     to="/"
-                    class="text-lg font-semibold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-black"
-                >
+                    class="text-lg font-semibold leading-relaxed mr-4 py-2 whitespace-nowrap text-black flex items-center"
+                >   
+                    <img
+                        :src="icon" 
+                        class="h-7 w-7 mr-1 inline"
+                    >
                     Politický kompas
                 </router-link>
                 <button
@@ -29,6 +33,7 @@
 <script>
 import { MenuIcon } from '@heroicons/vue/solid';
 import RouterLinks from './RouterLinks.vue';
+import icon from '../assets/icon.png'
 
 export default {
     name: 'Navigation',
@@ -39,6 +44,7 @@ export default {
     data() {
         return {
             showMenu: false,
+            icon
         };
     },
     methods: {

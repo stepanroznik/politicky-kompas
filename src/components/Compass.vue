@@ -1,7 +1,7 @@
 <template>
     <div class="relative border-4 border-gray-400 rounded">
         <axis-label class="absolute -top-6 left-1/2 z-20 transform -translate-x-1/2">
-            Autoritářství
+            Autoritářství/přísná pravidla
         </axis-label>
         <axis-label class="absolute -bottom-6 left-1/2 z-20 transform -translate-x-1/2">
             Libertariánství/osobní svoboda
