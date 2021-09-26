@@ -1,5 +1,5 @@
 <template>
-    <dl class="mt-3 p-5 grid grid-cols-1 gap-3 text-left">
+    <dl class="mt-5 md:p-5 grid grid-cols-1 gap-3 text-left">
         <div
             v-for="result, index in results"
             :key="result.party.id"

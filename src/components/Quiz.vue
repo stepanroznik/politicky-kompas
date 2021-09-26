@@ -31,24 +31,16 @@
             >
                 Spíše souhlasím
             </button>
-            <div class="flex flex-col xs:flex-row xs:gap-1 sm:flex-row sm:gap-1">
-                <button
-                    class="flex-1 border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                    :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
-                    type="button"
-                    @click="answerQuestion('3')"
-                >
-                    Neutrální
-                </button>
-                <button
-                    class="flex-1 border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
-                    :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '0') ? 'border-dashed border-gray-500' : 'border-transparent'"
-                    type="button"
-                    @click="answerQuestion('0')"
-                >
-                    Nevím
-                </button>
-            </div>
+            
+            <button
+                class="flex-1 border-2 border-solid active:outline-none answer col-al3 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '3') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                type="button"
+                @click="answerQuestion('3')"
+            >
+                Neutrální
+            </button>
+                
             <button
                 class="border-2 border-solid active:outline-none answer col-al2 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
                 :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '2') ? 'border-dashed border-gray-500' : 'border-transparent'"
@@ -64,6 +56,14 @@
                 @click="answerQuestion('1')"
             >
                 Rozhodně nesouhlasím
+            </button>
+            <button
+                class="flex-1 w-1/2 sm:w-1/3 self-end border-2 border-solid active:outline-none answer col-al0 text-white font-semibold uppercase text-sm px-6 py-1 sm:py-2.5 rounded mb-1 ease-linear transition-all duration-150"
+                :class="(isCurrentQuestionAnswered && currentQuestionAnswer === '0') ? 'border-dashed border-gray-500' : 'border-transparent'"
+                type="button"
+                @click="answerQuestion('0')"
+            >
+                Nevím
             </button>
         </div>
         <div class="py-4 sm:mt-4">
@@ -205,13 +205,13 @@ export default {
         background-color: hsl(20, 80%, 45%);
     }
     .col-al3 {
-        background-color: hsl(0, 0%, 60%);
+        background-color: hsl(52.5, 80%, 50%);
     }
     .col-al3:hover {
-        background-color: hsl(0, 0%, 50%);
+        background-color: hsl(52.5, 80%, 42.5%);
     }
     .col-al3:active {
-        background-color: hsl(0, 0%, 45%);
+        background-color: hsl(52.5, 80%, 35%);
     }
     .col-al4 {
         background-color: hsl(80, 80%, 45%);
@@ -230,5 +230,14 @@ export default {
     }
     .col-al5:active {
         background-color: hsl(100, 80%, 35%);
+    }
+    .col-al0 {
+        background-color: hsl(0, 0%, 60%);
+    }
+    .col-al0:hover {
+        background-color: hsl(0, 0%, 50%);
+    }
+    .col-al0:active {
+        background-color: hsl(0, 0%, 45%);
     }
 </style>

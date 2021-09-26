@@ -1,15 +1,15 @@
 <template>
     <div class="relative border-4 border-gray-400 rounded">
         <axis-label class="absolute -top-6 left-1/2 z-20 transform -translate-x-1/2">
-            Autoritářství/přísná pravidla
+            Autoritářství<span class="hidden lg:inline">/přísná pravidla</span>
         </axis-label>
         <axis-label class="absolute -bottom-6 left-1/2 z-20 transform -translate-x-1/2">
-            Libertariánství/osobní svoboda
+            Libertariánství<span class="hidden lg:inline">/osobní svoboda</span>
         </axis-label>
-        <axis-label class="absolute left-0 top-1/2 z-20 -mt-4 transform sm:-translate-x-1/2">
+        <axis-label class="absolute left-0 top-1/2 z-20 -mt-4 transform lg:-translate-x-1/2">
             Levice
         </axis-label>
-        <axis-label class="absolute right-0 top-1/2 z-20 -mt-4 transform sm:translate-x-1/2">
+        <axis-label class="absolute right-0 top-1/2 z-20 -mt-4 transform lg:translate-x-1/2">
             Pravice
         </axis-label>
         <div class="grid grid-rows-10 grid-cols-10 w-full h-full border border-white">
@@ -70,7 +70,7 @@ export default defineComponent({
     components: { AxisLabel },
     props: {
         parties: {
-            type: Object,
+            type: Array,
             required: true,
         }
     },

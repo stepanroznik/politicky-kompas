@@ -1,6 +1,7 @@
 export const getPartyOrientation = (answers: any) => {
     const leftRightAnswers: any = [];
     const topBottomAnswers: any = [];
+    const eastWestAnswers: any = [];
     answers.forEach((answer: any) => {
         const agreeLevel = (answer.agreeLevel - 3) * 2.5;
         switch (answer.Question.position) {
@@ -32,17 +33,25 @@ export const getPartyOrientation = (answers: any) => {
             topBottomAnswers.push(agreeLevel);
             leftRightAnswers.push(agreeLevel);
             break;
+        case "east":
+            eastWestAnswers.push(agreeLevel * -1);
+            break;
+        case "west":
+            eastWestAnswers.push(agreeLevel);
+            break;
         }
     });
 
-    const lr = leftRightAnswers.reduce((a: any, b: any) => a + b, 0) / leftRightAnswers.length;
-    const tb = topBottomAnswers.reduce((a: any, b: any) => a + b, 0) / topBottomAnswers.length;
+    const lr = !leftRightAnswers.length ? 0 : leftRightAnswers.reduce((a: any, b: any) => a + b, 0) / leftRightAnswers.length;
+    const tb = !topBottomAnswers.length ? 0 : topBottomAnswers.reduce((a: any, b: any) => a + b, 0) / topBottomAnswers.length;
+    const ew = !eastWestAnswers.length ? 0 : eastWestAnswers.reduce((a: any, b: any) => a + b, 0) / eastWestAnswers.length;
     const leftRight = Math.floor(lr)
     const topBottom = Math.floor(tb)
+    const eastWest = ew
 
-    console.log("leftRight:", leftRight, lr, "topBottom:", topBottom, tb);
+    console.log('leftRight:', leftRight, lr, 'topBottom:', topBottom, tb, 'eastWest:', eastWest, ew);
 
-    return { leftRight, topBottom }
+    return { leftRight, topBottom, eastWest }
 }
 
 export const getPartyAgreePercentage = (partyAnswers: any, userAnwers: any): number => {

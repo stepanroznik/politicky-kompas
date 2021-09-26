@@ -23,19 +23,19 @@
     </div>
     <a
         href="#"
-        @click="index--"
+        @click.prevent="index--"
     >
         Předchozí
     </a>
     <a
         href="#"
-        @click="sendAnswers"
+        @click.prevent="sendAnswers"
     >
         Odeslat
     </a>
     <a
         href="#"
-        @click="index++"
+        @click.prevent="index++"
     >
         Další
     </a>

@@ -1,7 +1,7 @@
 <template>
     <div class="about leading-6 text-left">
         <h2 class="text-xl font-semibold pb-8">
-            Politický kompas Politica.cz je politická kalkulačka, která se snaží být především srozumitelná a zábavná.
+            Politický kompas Politica.cz je volební kalkulačka, která se snaží být především srozumitelná a zábavná.
         </h2>
         <div class="grid sm:grid-cols-2">
             <div class="flex flex-col gap-6 text-md">
@@ -13,13 +13,14 @@
                 </p>
                 <p>
                     Téměř všechny otázky a odpovědi na ně vykrádám z webů jiných politických kalkulaček, jmenovitě:
-                    <span
+                    <a
                         v-for="website in websites"
                         :key="website"
+                        :href="'https://' + website"
                         class="block"
                     >
                         {{ website }}
-                    </span>
+                    </a>
                     Snažím se přitom vybírat hlavně takové otázky, které pochopí opravdu každý a formulovat je co nejsrozumitelněji.
                 </p>
                 <p>
@@ -27,11 +28,11 @@
                     <a
                         href="https://www.politicalcompass.org/"
                         class="border-b border-gray-800"
-                    > politicalcompass.org </a> a
+                    > politicalcompass.org</a> a 
                     <a
                         href="https://www.idnes.cz/zpravy/domaci/politicky-kompas-prvni-zjisteni.A160911_141109_domaci_jw"
                         class="border-b border-gray-800"
-                    > starého projektu iDNES </a>
+                    >starého projektu iDNES</a>.
                 </p>
             </div>
             <div
