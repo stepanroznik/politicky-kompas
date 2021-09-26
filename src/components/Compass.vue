@@ -1,10 +1,10 @@
 <template>
     <div class="relative border-4 border-gray-400 rounded">
         <axis-label class="absolute -top-6 left-1/2 z-20 transform -translate-x-1/2">
-            Autoritářství<span class="hidden lg:inline">/přísná pravidla</span>
+            Autoritářství<span class="hidden lg:inline">&nbsp;/ přísná pravidla</span>
         </axis-label>
         <axis-label class="absolute -bottom-6 left-1/2 z-20 transform -translate-x-1/2">
-            Libertariánství<span class="hidden lg:inline">/osobní svoboda</span>
+            Libertariánství<span class="hidden lg:inline">&nbsp;/ osobní svoboda</span>
         </axis-label>
         <axis-label class="absolute left-0 top-1/2 z-20 -mt-4 transform lg:-translate-x-1/2">
             Levice

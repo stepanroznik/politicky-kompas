@@ -23,8 +23,9 @@ export default {
             links: [
                 { name: 'Domů', url: '/' },
                 { name: 'Spustit test', url: '/test' },
+                { name: 'Odpovědi politických stran', url: '/answers' },
                 { name: 'O aplikaci', url: '/about' },
-                { name: '/answers', url: '/answers' },
+                { name: '/answers-dev', url: '/answers-dev' },
             ],
         };
     },

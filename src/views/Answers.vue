@@ -1,98 +1,114 @@
 <template>
     <div
         v-if="questions?.length && parties?.length"
-        class="h-24"
+        class="grid gap-6"
     >
-        <div>{{ questions[index].title }}</div>
-        <span
-            v-for="party in parties"
-            :key="party.id"
+        <div
+            v-for="question in questions"
+            :key="question.id"
         >
-            <span class="inline-flex flex-col">
-                {{ party.abbreviation }}
-                <input
-                    type="number"
-                    max="5"
-                    min="1"
-                    class="w-16"
-                    :value="answers.find((a) => a.QuestionId === currentQuestion.id && a.PartyId === party.id)?.agreeLevel"
-                    @change="changeAgreeLevel(party.id, $event.target.value)"
+            <h3 class="pb-2 text-left font-medium sm:w-2/3">
+                {{ question.title }}
+            </h3>
+            <div class="grid grid-cols-6 gap-1">
+                <div
+                    v-for="(i, index) in reverseOrder"
+                    :key="i"
+                    class="border-2 rounded-md py-2"
+                    :class="
+                        index === 0 ? 'border-green-300' : 
+                        index === 1 ? 'border-green-300' :  
+                        index === 2 ? 'border-yellow-300' :  
+                        index === 3 ? 'border-red-300' :  
+                        index === 4 ? 'border-red-300' :  
+                        'border-gray-300' "
                 >
-            </span>
-        </span>
+                    <svg
+                        class="inline-block sm:hidden h-5 w-5 mb-2"
+                        :class="
+                            index === 0 ? 'text-green-500 transform rotate-0' : 
+                            index === 1 ? 'text-green-500 transform rotate-45' :  
+                            index === 2 ? 'text-yellow-500 transform rotate-90' :
+                            index === 3 ? 'text-red-500 transform rotate-135' :  
+                            index === 4 ? 'text-red-500 transform rotate-180' :  
+                            'hidden' "
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    ><path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                    </svg>
+                    <span
+                        v-if="index === 5"
+                        class="sm:hidden inline-block mb-1 font-bold text-gray-500 text-md transform -translate-y-1"
+                    >
+                        ?
+                    </span>
+                        
+                    <span class="text-xs md:text-sm hidden sm:inline-block">
+                        {{
+                            index === 0 ? 'Souhlasí' : 
+                            index === 1 ? 'Spíše souhlasí' :  
+                            index === 2 ? 'Neutrální' :  
+                            index === 3 ? 'Spíše nesouhlasí' :  
+                            index === 4 ? 'Nesouhlasí' :  
+                            'Neví/neodpověděli' 
+                        }}
+                    </span>
+                    <div class="flex flex-shrink-0 flex-wrap justify-center">
+                        <template
+                            v-for="party in parties"
+                            :key="party.id"
+                        >
+                            <span 
+                                v-if="i === answers.find((a) => a.QuestionId === question.id && a.PartyId === party.id)?.agreeLevel"
+                                class="h-10 w-10 block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:z-10 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
+                                :style="{backgroundImage: `url(https://data.programydovoleb.cz/${party.logo})`}"
+                            />
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <a
-        href="#"
-        @click.prevent="index--"
-    >
-        Předchozí
-    </a>
-    <a
-        href="#"
-        @click.prevent="sendAnswers"
-    >
-        Odeslat
-    </a>
-    <a
-        href="#"
-        @click.prevent="index++"
-    >
-        Další
-    </a>
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue';
-import { apiGet, apiPost } from '../api/index';
+import { apiGet } from '../api/index';
 
 export default defineComponent({
     name: 'Answers',
     data: function () {
         return {
-            index: 0,
             parties: [] as any[],
             questions: [] as any[],
             answers: [] as any[],
             newAnswers: [] as any[],
             modifiedAnswers: [] as any[],
+            reverseOrder: [5,4,3,2,1,undefined]
         };
     },
-    computed: {
-        currentQuestion() {
-            return (this as any).questions[(this as any).index]
-        }
-    },
+    computed: {},
     async created() {
-        this.parties = await apiGet({ url: 'parties' });
+        this.parties = (this as any).$store.state.parties
+        await this.getPartiesDetail()
         this.questions = await apiGet({ url: 'questions' });
         this.answers = await apiGet({ url: 'answers' });
     },
     methods: {
-        changeAgreeLevel(partyId: number, value: string) {
-            const currentQuestion: any = this.currentQuestion
-            const existingAnswer = this.answers.find((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
-
-            const existingNewAnswerIndex = this.newAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
-            if (existingNewAnswerIndex !== -1) this.newAnswers.splice(existingNewAnswerIndex, 1)
-            const existingModifiedAnswerIndex = this.modifiedAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
-            if (existingModifiedAnswerIndex !== -1) this.modifiedAnswers.splice(existingModifiedAnswerIndex, 1)
-
-            if (value) {
-                const newAnswer = { PartyId: partyId, QuestionId: currentQuestion.id, agreeLevel: parseInt(value) }
-                console.log('existing:', !!existingAnswer, 'answer:', newAnswer)
-                if (!!existingAnswer) this.modifiedAnswers.push(newAnswer)
-                else this.newAnswers.push(newAnswer)
-            }
-        },
-        async sendAnswers() {
-            console.log('sending these:', this.newAnswers)
-            apiPost({url: 'answers', body: this.newAnswers});
-            this.modifiedAnswers.forEach(a => {
-                apiPost({url: `answers/${a.QuestionId}/${a.PartyId}`, body: a, method: 'PUT'})
+        async getPartiesDetail() {
+            const partiesExternal = (
+                await axios.get(
+                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
+                )
+            ).data.list;
+            this.parties.forEach(party => {
+                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
+                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
+                this.parties[partyIndex].color = partyExternal.color;
+                this.parties[partyIndex].logo = partyExternal.logo;
             })
-            this.newAnswers = [];
-            this.modifiedAnswers = [];
-            this.answers = await apiGet({ url: 'answers' });
         }
     },
 });
