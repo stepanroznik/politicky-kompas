@@ -1,15 +1,36 @@
 <template>
     <div
         v-if="questions?.length && parties?.length"
-        class="grid gap-6"
+        class="grid gap-6 py-4"
     >
         <div
             v-for="question in questions"
             :key="question.id"
         >
-            <h3 class="pb-2 text-left font-medium sm:w-2/3">
-                {{ question.title }}
-            </h3>
+            <span class="pb-2 flex flex-row items-center">
+                <span class="h-4 w-4 mr-2 text-gray-500 font-semibold leading-3 select-none">
+                    <svg
+                        v-if="['top','bottom','left','right'].includes(question.position)"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="transform"
+                        :class="{'rotate-90': question.position === 'left', '-rotate-90': question.position === 'right', 'rotate-180': question.position === 'top'}"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                    <template v-else>
+                        {{ question.position === 'center' ? '●' : question.position[0] }}
+                    </template>
+                </span>
+                <h3 class="text-left font-medium sm:w-2/3">
+                    {{ question.title }}
+                </h3>
+            </span>
             <div class="grid grid-cols-6 gap-1">
                 <div
                     v-for="(i, index) in reverseOrder"
@@ -71,15 +92,18 @@
             </div>
         </div>
     </div>
+    <loading v-else />
 </template>
 
 <script lang="ts">
+import Loading from '@/components/Loading.vue';
 import { defineComponent } from 'vue';
 import { apiGet } from '../api/index';
 import locationMarker from '../assets/locationMarker.svg'
 
 export default defineComponent({
     name: 'Answers',
+    components: { Loading },
     data: function () {
         return {
             parties: [] as any[],

@@ -1,6 +1,6 @@
 module.exports = {
     purge: {
-        enabled: false,
+        enabled: true,
         content: ['./src/**/*.vue', './public/index.html'],
         options: {
             safelist: [],
@@ -54,5 +54,4 @@ module.exports = {
         'visited',
         'disabled',
     ],
-    plugins: [require('@tailwindcss/forms')],
 };
