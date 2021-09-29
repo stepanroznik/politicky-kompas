@@ -35,7 +35,7 @@
                         v-if="!party.isUser && x === index + 1"
                         class="h-full w-full absolute block bg-contain border-2 rounded-md transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
                         :class="{'bg-white' : !party.isUser, 'border-none': party.isUser}"
-                        :style="{backgroundImage: party.isUser ? locationMarker : `url(https://data.programydovoleb.cz/${party.logo})`}"
+                        :style="{backgroundImage: party.isUser ? locationMarker : `url(${require(`@/assets/parties/${party.id}.png`)})`}"
                     />  
                     <span
                         v-else-if="party.isUser && x === index + 1"

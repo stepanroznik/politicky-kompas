@@ -1,7 +1,7 @@
 <template>
     <nav class="relative flex flex-wrap items-center justify-between px-2 py-1">
         <div class="container mx-auto flex flex-wrap items-center justify-between max-w-7xl border-b border-gray-400">
-            <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start px-4">
+            <div class="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start px-4">
                 <router-link
                     to="/"
                     class="text-lg font-semibold leading-relaxed mr-4 py-2 whitespace-nowrap text-black flex items-center"
@@ -13,7 +13,7 @@
                     Politický kompas
                 </router-link>
                 <button
-                    class="text-lg font-semibold text-black leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                    class="text-lg font-semibold text-black leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
                     type="button"
                     @click="toggleNavbar()"
                 >
@@ -22,7 +22,7 @@
             </div>
             <div
                 :class="{'hidden': !showMenu, 'flex': showMenu}"
-                class="lg:flex lg:flex-grow items-center"
+                class="md:flex md:flex-grow items-center"
             >
                 <router-links />
             </div>

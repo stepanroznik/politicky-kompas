@@ -7,7 +7,7 @@
         >   
             <span 
                 class="flex flex-shrink-0 w-12 h-12 bg-contain border-2 border-white bg-white rounded-md mr-2.5"
-                :style="{backgroundImage: `url(https://data.programydovoleb.cz/${result.party.logo})`}"
+                :style="{backgroundImage: `url(${require(`@/assets/parties/${result.party.id}.png`)})`}"
             />
             <span class="flex flex-col">
                 <dt class="text-md font-medium text-gray-500 truncate">

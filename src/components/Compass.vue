@@ -44,7 +44,7 @@
                             <span
                                 v-if="y === party.leftRight + 6 && x === party.topBottom + 6"
                                 class="h-full w-full absolute block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
-                                :style="{backgroundImage: `url(https://data.programydovoleb.cz/${party.logo})`}"
+                                :style="{backgroundImage: `url(${require(`@/assets/parties/${party.id}.png`)})`}"
                             />    
                         </template>
                         <span

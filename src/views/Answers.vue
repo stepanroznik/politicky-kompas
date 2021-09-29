@@ -60,9 +60,10 @@
                             :key="party.id"
                         >
                             <span 
-                                v-if="i === answers.find((a) => a.QuestionId === question.id && a.PartyId === party.id)?.agreeLevel"
-                                class="h-10 w-10 block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:z-10 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
-                                :style="{backgroundImage: `url(https://data.programydovoleb.cz/${party.logo})`}"
+                                v-if="i == party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel"
+                                class="h-10 w-10 block transform scale-90 opacity-70"
+                                :class="{ 'border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100': !party.isUser }"
+                                :style="{ backgroundImage: party.isUser ? `url(${locationMarker})` : `url(${require(`@/assets/parties/${party.id}.png`)})` }"
                             />
                         </template>
                     </div>
@@ -73,9 +74,9 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent } from 'vue';
 import { apiGet } from '../api/index';
+import locationMarker from '../assets/locationMarker.svg'
 
 export default defineComponent({
     name: 'Answers',
@@ -83,33 +84,16 @@ export default defineComponent({
         return {
             parties: [] as any[],
             questions: [] as any[],
-            answers: [] as any[],
-            newAnswers: [] as any[],
-            modifiedAnswers: [] as any[],
-            reverseOrder: [5,4,3,2,1,undefined]
+            reverseOrder: [5,4,3,2,1,undefined],
+            locationMarker
         };
     },
     computed: {},
     async created() {
-        this.parties = (this as any).$store.state.parties
-        await this.getPartiesDetail()
         this.questions = await apiGet({ url: 'questions' });
-        this.answers = await apiGet({ url: 'answers' });
+        this.parties = [ ...(this as any).$store.state.parties, { Answers: (this as any).$store.state.answers, isUser: true } ]
+        console.log('parties with user', this.parties)
     },
-    methods: {
-        async getPartiesDetail() {
-            const partiesExternal = (
-                await axios.get(
-                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
-                )
-            ).data.list;
-            this.parties.forEach(party => {
-                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
-                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
-                this.parties[partyIndex].color = partyExternal.color;
-                this.parties[partyIndex].logo = partyExternal.logo;
-            })
-        }
-    },
+    methods: {},
 });
 </script>

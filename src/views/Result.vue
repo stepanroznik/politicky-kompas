@@ -27,7 +27,6 @@
 import Compass from "@/components/Compass.vue";
 import Comparison from "@/components/Comparison.vue";
 import { defineComponent } from "@vue/runtime-core";
-import axios from "axios";
 import GeoOrientation from "@/components/GeoOrientation.vue";
 
 export default defineComponent({
@@ -43,23 +42,7 @@ export default defineComponent({
             this.$router.push({ name: 'Test' })
         }
         this.parties = (this as any).$store.state.parties
-        await this.getPartiesDetail()
     },
-    methods: {
-        async getPartiesDetail() {
-            const partiesExternal = (
-                await axios.get(
-                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
-                )
-            ).data.list;
-            this.parties.forEach(party => {
-                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
-                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
-                console.log(partyExternal.logo);
-                this.parties[partyIndex].color = partyExternal.color;
-                this.parties[partyIndex].logo = partyExternal.logo;
-            })
-        }
-    }
+    methods: {}
 });
 </script>

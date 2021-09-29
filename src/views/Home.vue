@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent } from 'vue';
 import Compass from '../components/Compass.vue';
 
@@ -53,23 +52,8 @@ export default defineComponent({
         }},
     async created() {
         this.parties = (this as any).$store.state.parties
-        await this.getPartiesDetail()
     },
-    methods: {
-        async getPartiesDetail() {
-            const partiesExternal = (
-                await axios.get(
-                    'https://2021.programydovoleb.cz/lib/app/api.php?action=party/list'
-                )
-            ).data.list;
-            this.parties.forEach(party => {
-                const partyIndex = this.parties.findIndex((p) => p.id === party.id);
-                const partyExternal = partiesExternal.find((p: any) => p.hash === party.externalId )
-                this.parties[partyIndex].color = partyExternal.color;
-                this.parties[partyIndex].logo = partyExternal.logo;
-            })
-        }
-    }
+    methods: {}
 });
 </script>
 
