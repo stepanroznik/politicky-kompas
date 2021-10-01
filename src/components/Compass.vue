@@ -43,13 +43,19 @@
                         >
                             <span
                                 v-if="y === party.leftRight + 6 && x === party.topBottom + 6"
-                                class="h-full w-full absolute block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
+                                class="group h-full w-full absolute block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:duration-300 scale-90 z-10 hover:z-30 hover:scale-150 opacity-70 hover:opacity-100"
                                 :style="{backgroundImage: `url(${require(`@/assets/parties/${party.id}.png`)})`}"
-                            />    
+                            >
+                                <span
+                                    class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
+                                >
+                                    <span class="">{{ party.name }}</span>
+                                </span>
+                            </span>    
                         </template>
                         <span
                             v-if="user && y === user.leftRight + 6 && x === user.topBottom + 6"
-                            class="h-full w-full absolute block bg-contain transform -translate-y-1 transition-all duration-150 hover:duration-300 z-30 scale-90 hover:scale-150 hover:-translate-y-4"
+                            class="h-full w-full absolute block bg-contain transform pointer-events-none -translate-y-1 transition-all duration-150 hover:duration-300 z-20 scale-90 hover:scale-150 hover:-translate-y-4"
                             :style="{backgroundImage: `url(${locationMarker})`}"
                         />  
                     </span>
@@ -95,7 +101,7 @@ export default defineComponent({
 <style scoped lang="postcss">
 .equal-height {
     padding-bottom: calc(100% - 2px);
-}
+} 
 
 .square-red {
     @apply bg-red-200;

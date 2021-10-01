@@ -1,29 +1,94 @@
 <template>
-    <div id="app">
-        <button
-            id="show-modal"
-            @click="showModal = true"
-        >
-            Show Modal
-        </button>
+    <teleport to="body">
         <transition name="modal">
-            <modal
-                v-if="showModal"
-                @close="showModal = false"
+            <div
+                v-if="show"
+                class="fixed z-50 inset-0 overflow-y-auto"
+                @close="$emit('close')"
             >
-                <template #header>
-                    <h3>custom header</h3>
-                </template>
-            </modal>
+                <div class="flex bg-black bg-opacity-40 items-end justify-center h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <span
+                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                        aria-hidden="true"
+                    >
+                        &#8203;
+                    </span>
+                    <div
+                        class="inline-block
+                        align-bottom
+                        bg-white
+                        rounded-lg
+                        px-4
+                        pt-5
+                        pb-4
+                        text-left
+                        overflow-hidden
+                        shadow-xl
+                        transform
+                        transition-all
+                        sm:my-8
+                        sm:align-middle
+                        sm:max-w-lg
+                        sm:w-full
+                        sm:p-6"
+                    >   
+                        <h3 class="text-lg text-center font-semibold">
+                            {{ message }}
+                        </h3>
+                        <p
+                            v-if="text"
+                            class="py-5"
+                        >
+                            {{ text }}
+                        </p>
+                        <div class="flex gap-2 justify-center">
+                            <button-default
+                                v-if="buttonNo"
+                                @click="$emit('close', false)"
+                            >
+                                {{ buttonNo }}
+                            </button-default>
+                            <button-default @click="$emit('close', true)">
+                                {{ buttonYes }}
+                            </button-default>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </transition>
-    </div>
+    </teleport>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import ButtonDefault from "./ButtonDefault.vue";
 
 export default defineComponent({
-    name: 'Modal'
+    name: 'Modal',
+    components: { ButtonDefault },
+    props: { show: {
+        type: Boolean,
+        required: true,
+    },
+    message: {
+        type: String,
+        required: true,
+    },
+    text: {
+        type: String,
+        default: '',
+    },
+    buttonYes: {
+        type: String,
+        default: 'Ok'
+    },
+    buttonNo: {
+        type: String,
+        default: ''
+    },
+
+    },
+    emits: ['close']
 })
 </script>
 

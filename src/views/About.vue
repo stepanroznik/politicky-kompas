@@ -12,27 +12,16 @@
                     Tímto projektem se snažím více zpřístupnit politiku lidem, kteří se o ni dříve nezajímali a v nejlepším případě je dostat k volbám.
                 </p>
                 <p>
-                    Téměř všechny otázky a odpovědi na ně vykrádám z webů jiných politických kalkulaček, jmenovitě:
+                    Téměř všechny otázky a odpovědi na ně jsem si vypůjčil z webů jiných politických kalkulaček, jmenovitě:
                     <a
                         v-for="website in websites"
                         :key="website"
                         :href="'https://' + website"
-                        class="block"
-                    >
-                        {{ website }}
-                    </a>
-                    Snažím se přitom vybírat hlavně takové otázky, které pochopí opravdu každý a formulovat je co nejsrozumitelněji.
+                        class="underline block"
+                    > {{ website }}</a>
                 </p>
                 <p>
-                    V rozmístění politických stran na kompas jsem se inspiroval podle 
-                    <a
-                        href="https://www.politicalcompass.org/"
-                        class="border-b border-gray-800"
-                    > politicalcompass.org</a> a 
-                    <a
-                        href="https://www.idnes.cz/zpravy/domaci/politicky-kompas-prvni-zjisteni.A160911_141109_domaci_jw"
-                        class="border-b border-gray-800"
-                    >starého projektu iDNES</a>.
+                    Snažím se přitom vybírat hlavně takové otázky, které pochopí opravdu každý a formulovat je co nejsrozumitelněji.
                 </p>
             </div>
             <div
@@ -51,7 +40,7 @@ export default defineComponent({
     name: 'About',
     data: function() {
         return {
-            websites: ['programydovoleb.cz', 'irozhlas/whatever'] as string[],
+            websites: ['2021.programydovoleb.cz/volebni-kalkulacka', 'irozhlas.cz/volebni-kompas-2021', 'zpravy.aktualne.cz/domaci/r~6c11947803f211eca1070cc47ab5f122/', 'volebnikalkulacka.cz/', 'idnes.cz/volby/kalkulacka', '8values.github.io/'] as string[],
             aboutImage
         }},
 });

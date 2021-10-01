@@ -8,6 +8,7 @@
             <router-link
                 :to="link.url"
                 class="px-3 py-1 flex items-center text-base font-normal text-black border border-transparent rounded hover:border-gray-400 transition-all"
+                @click="checkIfCanEnterAnswers(link.url)"
             >
                 <span :class="(link.url === $route.path) ? 'border-b border-gray-400' : ''"> 
                     {{ link.name }} 
@@ -39,13 +40,22 @@
             </router-link>
         </li>
     </ul>
+    <modal
+        :show="showAlert"
+        message="Nenechte se ovlivnit názory druhých"
+        text="Před zobrazením odpovědí jednotlivých politických stran si prosím vyplňte test podle svých skutečných názorů. Je to jen na pár minut. 😉"
+        @close="showAlert = false"
+    />
 </template>
 
 <script>
+import Modal from './Modal.vue';
 export default {
     name: 'RouterLinks',
+    components: { Modal },
     data() {
         return {
+            showAlert: false,
             links: [
                 { name: 'Domů', url: '/' },
                 { name: 'Spustit test', url: '/test' },
@@ -54,5 +64,13 @@ export default {
             ],
         };
     },
+    methods: {
+        checkIfCanEnterAnswers(url) {
+            if (url !== '/answers') return
+            if (!this.$store.state.quizCompleted) {
+                this.showAlert = true
+            }
+        }
+    }
 };
 </script>

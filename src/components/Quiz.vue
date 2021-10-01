@@ -82,7 +82,7 @@
                     </button>
                 </span>
                 <span class="p-1 text-lg text-gray-700">
-                    Otázka {{ currentQuestionIndex + 1 }} z {{ questions.length }}
+                    Otázka {{ currentQuestionIndex + 1 }} z {{ isCurrentQuestionPrimary ? primaryQuestionsCount : questions.length }}
                 </span>
                 <span class="text-sm text-gray-300">
                     <button
@@ -99,22 +99,33 @@
             <div class="w-full rounded h-6 p-1 border border-gray-300">
                 <div
                     class="progress-bar rounded-sm h-full bg-gray-300"
-                    :style="{width: 100/(questions.length/(currentQuestionIndex+1)) + '%'}"
+                    :style="{width: 100/((isCurrentQuestionPrimary ? primaryQuestionsCount : questions.length)/(currentQuestionIndex+1)) + '%'}"
                 />
             </div>
         </div>
+        <modal
+            :show="showModal"
+            :message="`Zvládnete ještě ${questions.length - primaryQuestionsCount} otázek?`"
+            :text="`Můžete test ihned ukončit nebo vyplnit posledních ${questions.length - primaryQuestionsCount} otázek a dostat tak přesnější výsledek.`"
+            button-yes="Ano, zvládnu!"
+            button-no="Ne, zobrazit výsledek"
+            @close="decideToContinue($event)"
+        />
     </div>
 </template>
 
 <script>
 import { apiGet } from '@/api';
+import Modal from './Modal.vue';
 
 export default {
     name: 'Quiz',
+    components: { Modal },
     data() {
         return {
             currentQuestionIndex: 0,
             questions: [],
+            showModal: false,
         };
     },
     computed: {
@@ -137,6 +148,12 @@ export default {
             if (this.isCurrentQuestionAnswered) return this.$store.state.answers.find((x) => x.Question.id === this.currentQuestion.id)?.agreeLevel;
             return false;
         },
+        primaryQuestionsCount() {
+            return this.questions.filter(q => q.isPrimary).length
+        },
+        isCurrentQuestionPrimary() {
+            return this.primaryQuestionsCount > this.currentQuestionIndex
+        }
     },
     async created() {
         this.questions = await apiGet({ url: 'questions'} );
@@ -172,9 +189,25 @@ export default {
             }
         },
         async answerQuestion(agreeLevel) {
+            if (this.isCurrentQuestionFirst) {
+                this.$store.state.answers = [];
+                this.$store.state.quizCompleted = false;
+            }
             await this.$store.commit('answerQuestion', { Question: {id: this.currentQuestion.id, position: this.currentQuestion.position }, agreeLevel });
+            if (this.primaryQuestionsCount - 1 === this.currentQuestionIndex) {
+                return this.showModal = true;
+            }
             this.goToNextQuestion()
         },
+        async decideToContinue(decision) {
+            if (decision) {
+                await this.goToNextQuestion()
+            } else {
+                await this.$store.commit('completeQuiz');
+                await this.$router.push({ name: 'Result' })
+            }
+            this.showModal = false;
+        }
     },
 };
 </script>
