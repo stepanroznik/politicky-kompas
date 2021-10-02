@@ -1,7 +1,7 @@
 <template>
-    <div class="grid md:grid-cols-2">
-        <div class="grid grid-rows-2 gap-12">
-            <div>
+    <div class="grid md:grid-cols-2 gap-8 md:gap-4">
+        <div class="flex flex-col md:grid grid-rows-2 gap-12">
+            <div class="">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 pb-10">
                     Podle umístění na kompase:
                 </h3>
@@ -14,11 +14,17 @@
                 <geo-orientation :parties="parties" />
             </div>
         </div>
-        <div>
+        <div class="pb-4">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Podle procentuální shody:
             </h3>
             <comparison :parties="parties" />
+            <router-link
+                to="/answers"
+                class="underline my-2"
+            >
+                Zobrazit odpovědi politických stran
+            </router-link>
         </div>
     </div>
 </template>

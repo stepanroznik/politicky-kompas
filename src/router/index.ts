@@ -41,7 +41,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.path === '/answers' && !store.state.quizCompleted) return
+    if (to.path === '/answers' && !store.state.quizCompleted) return next({path: from.path})
     return next();
 });
 
