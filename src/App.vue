@@ -6,6 +6,7 @@
     </div>
     <img
         class="sr-only"
+        alt="main page politicky-kompas politicky kompas"
         :src="compass"
     >
 </template>
