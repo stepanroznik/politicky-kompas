@@ -11,15 +11,19 @@
                 <p>
                     Tímto projektem se snažím více zpřístupnit politiku lidem, kteří se o ni dříve nezajímali a v nejlepším případě je dostat k volbám.
                 </p>
-                <p>
+                <div>
                     Téměř všechny otázky a odpovědi na ně jsem si vypůjčil z webů jiných politických kalkulaček, jmenovitě:
-                    <a
+                    <li 
                         v-for="website in websites"
                         :key="website"
-                        :href="'https://' + website"
-                        class="underline block"
-                    > {{ website }}</a>
-                </p>
+                    >
+                        <a
+                            :href="'https://' + website"
+                            class="underline break-words"
+                            style="word-break: break-all;"
+                        > {{ website }}</a>
+                    </li>
+                </div>
                 <p>
                     Snažím se přitom vybírat hlavně takové otázky, které pochopí opravdu každý a formulovat je co nejsrozumitelněji.
                 </p>

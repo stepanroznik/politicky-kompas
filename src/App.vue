@@ -4,6 +4,10 @@
         <router-view v-if="$store.state.parties?.length" />
         <loading v-else />
     </div>
+    <img
+        class="sr-only"
+        :src="compass"
+    >
 </template>
 
 <script>
@@ -11,11 +15,17 @@ import { apiGet } from './api';
 import Loading from './components/Loading.vue';
 import Navigation from './components/Navigation.vue';
 import { getPartyOrientation } from './utils/calculations';
+import compass from './assets/compass.png'
 
 export default {
     components: {
         Navigation,
         Loading,
+    },
+    data() {
+        return {
+            compass,
+        };
     },
     async created() {
         const partiesRaw = await apiGet({ url: "parties" , query: { 'include-answers': true }});
@@ -44,7 +54,7 @@ body {
     width: auto;
     padding: 0.1rem;
     width: 3.9rem;
-    top: 3rem;
+    top: 110%;
     left: 50%;
     transform: translateX(-50%);
 }
