@@ -9,7 +9,7 @@
             </div>
             <div>
                 <h3 class="text-lg leading-6 font-medium text-gray-900 pb-4">
-                    Podle směřování na západ/východ:
+                    Podle směřování na západ/východ (experimentální):
                 </h3>
                 <geo-orientation :parties="parties" />
             </div>
