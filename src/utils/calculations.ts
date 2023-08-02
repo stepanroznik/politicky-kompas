@@ -18,22 +18,6 @@ export const getPartyOrientation = (answers: any) => {
             case "bottom":
                 topBottomAnswers.push(agreeLevel);
                 break;
-            // case "top-left":
-            //     topBottomAnswers.push(agreeLevel * -1);
-            //     leftRightAnswers.push(agreeLevel * -1);
-            //     break;
-            // case "top-right":
-            //     topBottomAnswers.push(agreeLevel * -1);
-            //     leftRightAnswers.push(agreeLevel);
-            //     break;
-            // case "bottom-left":
-            //     topBottomAnswers.push(agreeLevel);
-            //     leftRightAnswers.push(agreeLevel * -1);
-            //     break;
-            // case "bottom-right":
-            //     topBottomAnswers.push(agreeLevel);
-            //     leftRightAnswers.push(agreeLevel);
-            //     break;
             case "east":
                 eastWestAnswers.push(agreeLevel * -1);
                 break;
@@ -47,29 +31,29 @@ export const getPartyOrientation = (answers: any) => {
     const lr = !leftRightAnswers.length ? 0 : leftRightAnswers.reduce((a: any, b: any) => a + b, 0) / leftRightAnswers.length;
     const tb = !topBottomAnswers.length ? 0 : topBottomAnswers.reduce((a: any, b: any) => a + b, 0) / topBottomAnswers.length;
     const ew = !eastWestAnswers.length ? 0 : eastWestAnswers.reduce((a: any, b: any) => a + b, 0) / eastWestAnswers.length;
-    const leftRight = (Math.floor(lr) === 5) ? 4 : Math.floor(lr)
-    const topBottom = (Math.floor(tb) === 5) ? 4 : Math.floor(tb)
-    const eastWest = ew
+    const leftRight = (Math.floor(lr) === 5) ? 4 : Math.floor(lr);
+    const topBottom = (Math.floor(tb) === 5) ? 4 : Math.floor(tb);
+    const eastWest = ew;
 
     console.log('leftRight:', leftRight, lr, 'topBottom:', topBottom, tb, 'eastWest:', eastWest, ew);
 
-    return { leftRight, topBottom, eastWest }
-}
+    return { leftRight, topBottom, eastWest };
+};
 
 export const getPartyAgreePercentage = (partyAnswers: any, userAnwers: any): number => {
-    const differences = [] as any
+    const differences = [] as any;
 
     partyAnswers.forEach((partyAnswer: any) => {
-        const userAnswer = userAnwers.find((a: any) => a.Question.id === partyAnswer.Question.id)
+        const userAnswer = userAnwers.find((a: any) => a.Question.id === partyAnswer.Question.id);
         if (userAnswer && userAnswer.agreeLevel != 0) {
-            const disagreeLevel = Math.abs(partyAnswer.agreeLevel - userAnswer.agreeLevel)
-            differences.push(disagreeLevel)
+            const disagreeLevel = Math.abs(partyAnswer.agreeLevel - userAnswer.agreeLevel);
+            differences.push(disagreeLevel);
         }
     });
 
-    if (!differences.length) return 0
+    if (!differences.length) return 0;
 
-    const disagreeTotal = differences.reduce((a: any, b: any) => a + b, 0) / differences.length
-    const AgreePercentage = Math.round((100 - disagreeTotal * 25) * 100) / 100
-    return AgreePercentage
-}
+    const disagreeTotal = differences.reduce((a: any, b: any) => a + b, 0) / differences.length;
+    const AgreePercentage = Math.round((100 - disagreeTotal * 25) * 100) / 100;
+    return AgreePercentage;
+};

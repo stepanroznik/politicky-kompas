@@ -19,11 +19,10 @@ export default createStore({
             else state.answers[answerIndex].agreeLevel = agreeLevel;
         },
         setParties(state, parties) {
-            state.parties = parties
+            state.parties = parties;
         },
         completeQuiz(state) {
-            state.quizCompleted = true
-            console.log('quiz completed')
+            state.quizCompleted = true;
         }
     },
     actions: {

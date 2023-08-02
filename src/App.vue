@@ -1,7 +1,7 @@
 <template>
     <navigation />
     <div class="text-center max-w-5xl m-auto mt-6 sm:mt-12 px-2">
-        <router-view v-if="$store.state.parties?.length" />
+        <router-view v-if="parties.length" />
         <loading v-else />
     </div>
     <img
@@ -11,35 +11,22 @@
     >
 </template>
 
-<script>
-import { apiGet } from './api';
+<script setup lang="ts">
 import Loading from './components/Loading.vue';
 import Navigation from './components/Navigation.vue';
-import { getPartyOrientation } from './utils/calculations';
-import compass from './assets/compass.png'
+import compass from './assets/compass.png';
+import { PartyModel } from './api';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
-export default {
-    components: {
-        Navigation,
-        Loading,
-    },
-    data() {
-        return {
-            compass,
-        };
-    },
-    async created() {
-        const partiesRaw = await apiGet({ url: "parties" , query: { 'include-answers': true }});
-        const parties = partiesRaw.map( party => {
-            return { ...party, ...getPartyOrientation(party.Answers) }
-        } )
-        console.log(parties)
-        this.$store.commit('setParties', parties)
-    }
-};
+const store = useStore();
+
+const parties = computed(() => store.state.parties);
+
+await PartyModel.fetchLatest();
 </script>
 
-<style lang="postcss">
+<style>
 body {
     overflow-y: scroll;
 }

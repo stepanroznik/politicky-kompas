@@ -20,6 +20,7 @@ module.exports = {
         ecmaVersion: 6
     },
     rules: {
+        semi: 'warn',
         indent: ['warn', 4],
         'vue/html-indent': ['warn', 4],
         'max-len': ['warn', { code: 300, tabWidth: 4 }],
