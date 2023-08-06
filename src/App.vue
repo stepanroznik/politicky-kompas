@@ -1,8 +1,8 @@
 <template>
     <navigation />
     <div class="text-center max-w-5xl m-auto mt-6 sm:mt-12 px-2">
-        <router-view v-if="parties.length" />
-        <loading v-else />
+        <!-- <router-view v-if="parties.length" /> -->
+        <loading />
     </div>
     <img
         class="sr-only"
@@ -16,14 +16,8 @@ import Loading from './components/Loading.vue';
 import Navigation from './components/Navigation.vue';
 import compass from './assets/compass.png';
 import { PartyModel } from './api';
-import { useStore } from 'vuex';
-import { computed } from 'vue';
 
-const store = useStore();
-
-const parties = computed(() => store.state.parties);
-
-await PartyModel.fetchLatest();
+// await PartyModel.fetchLatest();
 </script>
 
 <style>

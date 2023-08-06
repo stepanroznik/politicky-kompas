@@ -1,7 +1,7 @@
 import { IGetParams, IPostParams, IUrlParams } from "./api.interfaces";
 import { HttpErrorFactory } from "./api.errors";
 
-export const backendApiHost = process.env.VUE_APP_BACKEND_API_URL;
+export const backendApiHost = import.meta.VUE_APP_BACKEND_API_URL;
 
 export function generateUrl({ url, query }: IUrlParams): string {
     let fetchUrl = `${backendApiHost}/${url}`;

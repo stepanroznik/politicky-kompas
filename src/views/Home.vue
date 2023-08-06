@@ -57,7 +57,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="postcss">
+<style scoped>
 .grid-main {
         grid-template-columns: none
     }
