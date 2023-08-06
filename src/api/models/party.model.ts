@@ -25,7 +25,7 @@ export class PartyModel {
     static async fetchLatest() {
         const parties = await apiGet({ url: "parties" , query: { 'include-answers': true }}) as IPartyWithAnswers[];
         const partiesWithOrientation: IPartyWithOrientation[] = parties.map(party => {
-            const orientation= getPartyOrientation(party.Answers);
+            const orientation = getPartyOrientation(party.Answers);
             return { ...party, ...orientation};
         } );
         store.commit('setParties', partiesWithOrientation);

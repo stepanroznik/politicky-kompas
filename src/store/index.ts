@@ -1,3 +1,4 @@
+import { IPartyWithOrientation } from '@/api';
 import { createStore } from 'vuex';
 import VuexPersistence from 'vuex-persist';
 
@@ -8,7 +9,7 @@ const vuexLocal = new VuexPersistence({
 export default createStore({
     state: {
         answers: [] as any,
-        parties: [] as any,
+        parties: [] as IPartyWithOrientation[],
         quizCompleted: false as boolean
     },
     mutations: {
