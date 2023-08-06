@@ -1,32 +1,27 @@
 import { IPartyWithOrientation } from '@/api';
+import { defineStore } from "pinia";
+import 'pinia-plugin-persistedstate';
 
-const vuexLocal = new VuexPersistence({
-    storage: window.localStorage,
-});
-
-export default createStore({
-    state: {
+export const useQuizStore = defineStore("quiz", {
+    state: () => ({
         answers: [] as any,
         parties: [] as IPartyWithOrientation[],
-        quizCompleted: false as boolean
-    },
-    mutations: {
+        quizCompleted: false
+    }),
+    actions: {
         // if a question has been answered before, the new answer replaces the previous one, otherwise another answer is added to the state.answers object
-        answerQuestion(state, { Question, agreeLevel }) {
-            const answerIndex: number = state.answers.findIndex((x: any) => x.Question?.id === Question.id);
-            if (answerIndex === -1) state.answers.push({ Question, agreeLevel });
-            else state.answers[answerIndex].agreeLevel = agreeLevel;
+        answerQuestion(Question: /* TODO */ {id: any; }, agreeLevel: number) {
+            const answerIndex: number = this.answers.findIndex((x: any) => x.Question?.id === Question.id);
+            if (answerIndex === -1) this.answers.push({ Question, agreeLevel });
+            else this.answers[answerIndex].agreeLevel = agreeLevel;
         },
-        setParties(state, parties) {
-            state.parties = parties;
+        setParties(parties: IPartyWithOrientation[]) {
+            this.parties = parties;
         },
-        completeQuiz(state) {
-            state.quizCompleted = true;
+        completeQuiz() {
+            this.quizCompleted = true;
         }
     },
-    actions: {
-    },
-    modules: {
-    },
-    plugins: [vuexLocal.plugin],
 });
+
+export default useQuizStore;
