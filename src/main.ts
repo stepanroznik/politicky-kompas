@@ -3,6 +3,6 @@ import App from './App.vue';
 // import './registerServiceWorker';
 import router from './router';
 import './assets/tailwind.css';
-import { createPinia } from 'pinia'
+import { createPinia } from 'pinia';
 
 createApp(App).use(createPinia()).use(router).mount('#app');

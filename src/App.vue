@@ -15,7 +15,7 @@
 import Loading from './components/Loading.vue';
 import Navigation from './components/Navigation.vue';
 import compass from './assets/compass.png';
-import { PartyModel } from './api';
+// import { PartyModel } from './api';
 
 // await PartyModel.fetchLatest();
 </script>
