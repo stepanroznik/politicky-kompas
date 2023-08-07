@@ -21,7 +21,7 @@
                             stroke="currentColor"
                         >
                             <path
-                                v-if="$store.state.quizCompleted"
+                                v-if="store.quizCompleted"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -41,36 +41,33 @@
         </li>
     </ul>
     <modal
-        :show="showAlert"
+        :show="showCompleteQuizMessage"
         message="Nenechte se ovlivnit názory druhých"
         text="Před zobrazením odpovědí jednotlivých politických stran si prosím vyplňte test podle svých skutečných názorů. Je to jen na pár minut. 😉"
-        @close="showAlert = false"
+        @close="showCompleteQuizMessage = false"
     />
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import Modal from './Modal.vue';
-export default {
-    name: 'RouterLinks',
-    components: { Modal },
-    data() {
-        return {
-            showAlert: false,
-            links: [
-                { name: 'Domů', url: '/' },
-                { name: 'Spustit test', url: '/test' },
-                { name: 'Odpovědi politických stran', url: '/answers' },
-                { name: 'O aplikaci', url: '/about' },
-            ],
-        };
-    },
-    methods: {
-        checkIfCanEnterAnswers(url) {
-            if (url !== '/answers') return
-            if (!this.$store.state.quizCompleted) {
-                this.showAlert = true
-            }
-        }
+import useQuizStore from '@/store';
+
+const store = useQuizStore();
+
+const showCompleteQuizMessage = ref(false);
+
+const links = [
+    { name: 'Domů', url: '/' },
+    { name: 'Spustit test', url: '/test' },
+    { name: 'Odpovědi politických stran', url: '/answers' },
+    { name: 'O aplikaci', url: '/about' },
+] as const;
+
+const checkIfCanEnterAnswers = (url: typeof links[number]['url']) => {
+    if (url !== '/answers') return;
+    if (!store.quizCompleted) {
+        showCompleteQuizMessage.value = true;
     }
 };
 </script>

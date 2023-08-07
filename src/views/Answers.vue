@@ -84,7 +84,7 @@
                                 v-if="(i == party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel) || (!i && party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel == 0)"
                                 class="h-10 w-10 block transform scale-90 opacity-70 group"
                                 :class="{ 'border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100': !party.isUser }"
-                                :style="{ backgroundImage: party.isUser ? `url(${locationMarker})` : `url(${require(`@/assets/parties/${party.id}.png`)})` }"
+                                :style="{ backgroundImage: party.isUser ? `url(${locationMarker})` : `url(${import(`@/assets/parties/${party.id}.png`)})` }"
                             >
                                 <span
                                     v-if="!party.isUser"

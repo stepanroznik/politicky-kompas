@@ -35,7 +35,7 @@
                         v-if="!party.isUser && x === index + 1"
                         class="group h-full w-full absolute block bg-contain border-2 rounded-md transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
                         :class="{'bg-white' : !party.isUser, 'border-none': party.isUser}"
-                        :style="{backgroundImage: party.isUser ? locationMarker : `url(${require(`@/assets/parties/${party.id}.png`)})`}"
+                        :style="{backgroundImage: party.isUser ? locationMarker : `url(${import(`@/assets/parties/${party.id}.png`)})`}"
                     >
                         <span
                             class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
@@ -90,7 +90,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="postcss">
+<style scoped>
 .equal-height {
     padding-bottom: calc(100% - 2px);
 }

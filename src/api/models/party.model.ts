@@ -1,6 +1,7 @@
-import store from "@/store";
+import useQuizStore from "@/store";
 import { apiGet } from "../common.api";
 import { getPartyOrientation } from "@/utils/calculations";
+import { ICompassOrientation } from "@/interfaces/compass-orientation.inteface";
 
 export interface IParty {
     createdAt: string;
@@ -15,11 +16,7 @@ export interface IPartyWithAnswers extends IParty {
     Answers: []
 }
 
-export interface IPartyWithOrientation extends IPartyWithAnswers {
-    leftRight: number;
-    topBottom: number;
-    eastWest: number;
-}
+export type IPartyWithOrientation = IPartyWithAnswers & ICompassOrientation
 
 export class PartyModel {
     static async fetchLatest() {
@@ -28,6 +25,7 @@ export class PartyModel {
             const orientation = getPartyOrientation(party.Answers);
             return { ...party, ...orientation};
         } );
-        store.commit('setParties', partiesWithOrientation);
+        const store = useQuizStore();
+        store.setParties(partiesWithOrientation);
     }
 }

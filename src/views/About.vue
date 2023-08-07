@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import aboutImage from '../assets/compass.png'
 
 export default defineComponent({

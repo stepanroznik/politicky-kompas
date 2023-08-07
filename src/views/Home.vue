@@ -21,7 +21,7 @@
                     Spustit test
                 </button>
                 <span
-                    v-if="$store.state.quizCompleted"
+                    v-if="quizCompleted"
                     class="text-sm text-gray-600"
                 >
                     Test jste již dříve vyplnili.
@@ -37,24 +37,16 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import Compass from '../components/Compass.vue';
+import useQuizStore from '@/store';
 
-export default defineComponent({
-    name: 'Home',
-    components: {
-        Compass,
-    },
-    data: function() {
-        return {
-            parties: [] as any[],
-        }},
-    async created() {
-        this.parties = (this as any).$store.state.parties
-    },
-    methods: {}
-});
+const store = useQuizStore();
+
+const parties = computed(() => store.parties);
+
+const quizCompleted = computed(() => store.quizCompleted);
 </script>
 
 <style scoped>

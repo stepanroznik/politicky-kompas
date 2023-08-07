@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import Compass from "@/components/Compass.vue";
-import Comparison from "@/components/Comparison.vue";
-import { defineComponent } from "@vue/runtime-core";
+import Comparison from "@/components/ResultsComparison.vue";
+import { defineComponent } from "vue";
 import GeoOrientation from "@/components/GeoOrientation.vue";
 
 export default defineComponent({
@@ -41,13 +41,13 @@ export default defineComponent({
     data: function() {
         return {
             parties: [] as any[],
-        }},
+        };},
     computed: {},
     async created() {
         if (!(this as any).$store.state.quizCompleted) {
-            this.$router.push({ name: 'Test' })
+            this.$router.push({ name: 'Test' });
         }
-        this.parties = (this as any).$store.state.parties
+        this.parties = (this as any).$store.state.parties;
     },
     methods: {}
 });

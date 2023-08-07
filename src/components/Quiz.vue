@@ -149,43 +149,43 @@ export default {
             return false;
         },
         primaryQuestionsCount() {
-            return this.questions.filter(q => q.isPrimary).length
+            return this.questions.filter(q => q.isPrimary).length;
         },
         isCurrentQuestionPrimary() {
-            return this.primaryQuestionsCount > this.currentQuestionIndex
+            return this.primaryQuestionsCount > this.currentQuestionIndex;
         }
     },
     async created() {
         this.questions = await apiGet({ url: 'questions'} );
-        const q = parseInt(this.$route.query.q)
+        const q = parseInt(this.$route.query.q);
         if (q > 0 && q <= this.questions.length) {
             if (this.$store.state.answers.length >= q - 1) {
-                this.currentQuestionIndex = q - 1
-                return
+                this.currentQuestionIndex = q - 1;
+                return;
             }
         }
-        this.setCurrentQuestionQuery()
+        this.setCurrentQuestionQuery();
         
     },
     methods: {
         async setCurrentQuestionQuery() {
-            await this.$router.push({ query: { q: this.currentQuestionIndex + 1 } })
+            await this.$router.push({ query: { q: this.currentQuestionIndex + 1 } });
         },
         goToPreviousQuestion() {
             if (!this.isCurrentQuestionFirst) {
                 this.currentQuestionIndex -= 1;
-                this.setCurrentQuestionQuery()
+                this.setCurrentQuestionQuery();
             }
         },
         async goToNextQuestion() {
             if (this.isCurrentQuestionAnswered && !this.isCurrentQuestionLast) {
                 this.currentQuestionIndex += 1;
-                this.setCurrentQuestionQuery()
-                return 
+                this.setCurrentQuestionQuery();
+                return; 
             }
             if (this.isCurrentQuestionLast) {
                 await this.$store.commit('completeQuiz');
-                await this.$router.push({ name: 'Result' })
+                await this.$router.push({ name: 'Result' });
             }
         },
         async answerQuestion(agreeLevel) {
@@ -197,14 +197,14 @@ export default {
             if (this.primaryQuestionsCount - 1 === this.currentQuestionIndex) {
                 return this.showModal = true;
             }
-            this.goToNextQuestion()
+            this.goToNextQuestion();
         },
         async decideToContinue(decision) {
             if (decision) {
-                await this.goToNextQuestion()
+                await this.goToNextQuestion();
             } else {
                 await this.$store.commit('completeQuiz');
-                await this.$router.push({ name: 'Result' })
+                await this.$router.push({ name: 'Result' });
             }
             this.showModal = false;
         }
@@ -212,7 +212,7 @@ export default {
 };
 </script>
 
-<style scoped lang="postcss">
+<style scoped>
     .progress-bar {
         transition: width 0.5s;
     }

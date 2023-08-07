@@ -2,7 +2,7 @@
     <navigation />
     <div class="text-center max-w-5xl m-auto mt-6 sm:mt-12 px-2">
         <router-view v-if="parties.length" />
-        <loading />
+        <loading v-else />
     </div>
     <img
         class="sr-only"
@@ -19,9 +19,9 @@ import Loading from './components/Loading.vue';
 import Navigation from './components/Navigation.vue';
 import { useQuizStore } from './store';
 
-const store = useQuizStore()
+const store = useQuizStore();
 
-const parties = computed(() => store.parties)
+const parties = computed(() => store.parties);
 
 void PartyModel.fetchLatest();
 </script>
