@@ -22,23 +22,24 @@
                         v-for="(party, index) in partiesSorted"
                         :key="party.id"
                     >
-                        <span
-                            v-if="!('isUser' in party) && x === index + 1"
-                            class="group h-full w-full absolute block bg-contain border-2 rounded-md transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
-                            :class="{ 'bg-white': !( 'isUser'in party), 'border-none': ('isUser' in party) }"
-                            :style="{ backgroundImage: ('isUser' in party) ? locationMarker : `url(${import(`@/assets/parties/${party.id}.png`)})` }"
-                        >
-                            <span
-                                class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
+                        <template v-if="x === index + 1">
+                            <PartyIcon
+                                v-if="!('isUser' in party)"
+                                :party-id="party.id"
+                                class="group h-full w-full absolute block bg-white bg-contain border-2 rounded-md transform transition-all duration-150 hover:duration-300 scale-90 hover:scale-150 opacity-70 hover:opacity-100"
                             >
-                                <span class="">{{ party.name }}</span>
-                            </span>
-                        </span>
-                        <span
-                            v-else-if="('isUser' in party) && x === index + 1"
-                            class="h-full w-full absolute block bg-contain transform -translate-y-1 transition-all duration-150 hover:duration-300 z-30 scale-90 hover:scale-150 hover:-translate-y-4"
-                            :style="{ backgroundImage: `url(${locationMarker})` }"
-                        />
+                                <span
+                                    class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
+                                >
+                                    {{ party.name }}
+                                </span>
+                            </PartyIcon>
+                            <span
+                                v-else
+                                class="h-full w-full absolute block bg-contain transform -translate-y-1 transition-all duration-150 hover:duration-300 z-30 scale-90 hover:scale-150 hover:-translate-y-4"
+                                :style="{ backgroundImage: `url(${locationMarker})` }"
+                            />
+                        </template>
                     </template>
                 </span>
             </template>
@@ -54,6 +55,7 @@ import { PropType, computed, ref } from "vue";
 import locationMarker from "../assets/locationMarker.svg";
 import AxisLabel from "./AxisLabel.vue";
 import useQuizStore from "@/store";
+import PartyIcon from "./PartyIcon.vue";
 
 const props = defineProps({
     parties: {

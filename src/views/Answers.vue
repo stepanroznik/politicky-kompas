@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="questions?.length && parties?.length"
+        v-if="questions.length && parties.length"
         class="grid gap-6 py-4"
     >
         <div
@@ -80,19 +80,25 @@
                             v-for="party in parties"
                             :key="party.id"
                         >
-                            <span 
-                                v-if="(i == party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel) || (!i && party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel == 0)"
-                                class="h-10 w-10 block transform scale-90 opacity-70 group"
-                                :class="{ 'border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100': !('isUser' in party) }"
-                                :style="{ backgroundImage: ('isUser' in party) ? `url(${locationMarker})` : `url(${import(`@/assets/parties/${party.id}.png`)})` }"
-                            >
+                            <template v-if="(i == party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel) || (!i && party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel == 0)">
                                 <span
-                                    v-if="!('isUser' in party)"
-                                    class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
+                                    v-if="'isUser' in party"
+                                    class="h-10 w-10 block transform scale-90 opacity-70 group"
+                                    :style="{ backgroundImage: `url(${locationMarker})` }"
+                                />
+                                <PartyIcon
+                                    v-else
+                                    :party-id="party.id"
+                                    class="h-10 w-10 block transform scale-90 opacity-70 group border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100"
                                 >
-                                    <span class="">{{ party.name }}</span>
-                                </span>
-                            </span>
+                                    <span
+                                        v-if="!('isUser' in party)"
+                                        class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
+                                    >
+                                        <span class="">{{ party.name }}</span>
+                                    </span>
+                                </PartyIcon>
+                            </template>
                         </template>
                     </div>
                 </div>
@@ -109,13 +115,16 @@ import useQuizStore from '@/store';
 import { ref } from 'vue';
 import { IPartyWithAnswers, apiGet } from '../api/index';
 import locationMarker from '../assets/locationMarker.svg';
+import PartyIcon from '@/components/PartyIcon.vue';
 
 const store = useQuizStore();
 
 const parties = ref([] as (IPartyWithAnswers | IUserResult)[]);
 const questions = ref([]);
 
-questions.value = await apiGet({ url: 'questions' });
-parties.value = [ ...store.parties, { Answers: store.answers, isUser: true } ];
-console.log('parties with user', parties.value);
+(async () => {
+    questions.value = await apiGet({ url: 'questions' });
+    parties.value = [ ...store.parties, { Answers: store.answers, isUser: true } ];
+    console.log('parties with user', parties.value);
+})();
 </script>

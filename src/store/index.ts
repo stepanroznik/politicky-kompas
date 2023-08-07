@@ -22,6 +22,7 @@ export const useQuizStore = defineStore("quiz", {
             this.quizCompleted = true;
         }
     },
+    persist: true,
 });
 
 export default useQuizStore;

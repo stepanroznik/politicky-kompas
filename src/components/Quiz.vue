@@ -117,34 +117,38 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { apiGet } from "@/api";
 import Modal from "./Modal.vue";
 import { useRouter, useRoute } from "vue-router";
 import useQuizStore from "@/store";
+
+const props = defineProps({
+    questions: {
+        type: Array,
+        required: true
+    }
+});
 
 const router = useRouter();
 const route = useRoute();
 const store = useQuizStore();
 
 const currentQuestionIndex = ref(0);
-const questions = ref([]);
 const showModal = ref(false);
 
 const isCurrentQuestionFirst = computed(() => currentQuestionIndex.value === 0);
-const isCurrentQuestionLast = computed(() => currentQuestionIndex.value + 1 >= questions.value.length);
-const currentQuestion = computed(() => questions.value[currentQuestionIndex.value]);
+const isCurrentQuestionLast = computed(() => currentQuestionIndex.value + 1 >= props.questions.length);
+const currentQuestion = computed(() => props.questions[currentQuestionIndex.value]);
 const isCurrentQuestionAnswered = computed(() => !!store.answers.find((x) => x.Question.id === currentQuestion.value.id)?.agreeLevel);
 const currentQuestionAnswer = computed(() => {
     if (isCurrentQuestionAnswered.value) return store.answers.find((x) => x.Question.id === currentQuestion.value.id)?.agreeLevel;
     return false;
 });
-const primaryQuestionsCount = computed(() => questions.value.filter((q) => q.isPrimary).length);
+const primaryQuestionsCount = computed(() => props.questions.filter((q) => q.isPrimary).length);
 const isCurrentQuestionPrimary = computed(() => primaryQuestionsCount.value > currentQuestionIndex.value);
 
 onMounted(async () => {
-    questions.value = await apiGet({ url: "questions" });
     const q = parseInt(route.query.q as string);
-    if (q > 0 && q <= questions.value.length) {
+    if (q > 0 && q <= props.questions.length) {
         if (store.answers.length >= q - 1) {
             currentQuestionIndex.value = q - 1;
             return;

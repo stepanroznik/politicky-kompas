@@ -5,9 +5,9 @@
             :key="result.party.id"
             class="py-2.5 px-4 border-4 bg-gray-200 rounded overflow-hidden relative flex flex-row items-center"
         >
-            <span 
+            <PartyIcon
+                :party-id="result.party.id"
                 class="flex flex-shrink-0 w-12 h-12 bg-contain border-2 border-white bg-white rounded-md mr-2.5"
-                :style="{backgroundImage: `url(${import(`@/assets/parties/${result.party.id}.png`)})`}"
             />
             <span class="flex flex-col">
                 <dt class="text-md font-medium text-gray-500 truncate">
@@ -60,6 +60,10 @@ import locationMarker from '../assets/locationMarker.svg';
 import { useRouter } from "vue-router";
 import useQuizStore from "@/store";
 import { IPartyWithOrientation } from "@/api";
+import PartyIcon from "./PartyIcon.vue";
+
+const bigParties = ['SPOLU', 'Piráti+STAN', 'ANO', 'SPD'] as const;
+const smallParties = ['PŘÍSAHA', 'ČSSD', 'KSČM', 'TSS'] as const;
 
 const router = useRouter();
 const store = useQuizStore();
@@ -71,9 +75,6 @@ const props = defineProps({
     }
 });
 const results = ref([] as any);
-const bigParties = ['SPOLU', 'Piráti+STAN', 'ANO', 'SPD'] as const;
-const smallParties = ['PŘÍSAHA', 'ČSSD', 'KSČM', 'TSS'] as const;
-
 (() => {
     if (!store.quizCompleted) {
         router.push({ name: 'Test' });
