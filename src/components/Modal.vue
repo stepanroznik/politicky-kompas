@@ -59,14 +59,11 @@
     </teleport>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import ButtonDefault from "./ButtonDefault.vue";
 
-export default defineComponent({
-    name: 'Modal',
-    components: { ButtonDefault },
-    props: { show: {
+defineProps({ 
+    show: {
         type: Boolean,
         required: true,
     },
@@ -85,11 +82,9 @@ export default defineComponent({
     buttonNo: {
         type: String,
         default: ''
-    },
+    }});
 
-    },
-    emits: ['close']
-})
+defineEmits(['close']);
 </script>
 
 <style>

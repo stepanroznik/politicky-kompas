@@ -1,4 +1,6 @@
-export const getPartyOrientation = (answers: any) => {
+import { ICompassOrientation } from "@/interfaces/compass-orientation.inteface";
+
+export const getPartyOrientation = (answers: any): ICompassOrientation => {
     const leftRightAnswers: any = [];
     const topBottomAnswers: any = [];
     const eastWestAnswers: any = [];

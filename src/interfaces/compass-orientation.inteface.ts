@@ -3,3 +3,7 @@ export interface ICompassOrientation {
     topBottom: number;
     eastWest: number;
 }
+
+export interface IUserCompassOrientation extends ICompassOrientation {
+    isUser: true;
+}

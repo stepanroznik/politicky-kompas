@@ -59,7 +59,7 @@ export default defineComponent({
     },
     computed: {
         currentQuestion() {
-            return (this as any).questions[(this as any).index]
+            return (this as any).questions[(this as any).index];
         }
     },
     async created() {
@@ -69,27 +69,27 @@ export default defineComponent({
     },
     methods: {
         changeAgreeLevel(partyId: number, value: string) {
-            const currentQuestion: any = this.currentQuestion
-            const existingAnswer = this.answers.find((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
+            const currentQuestion: any = this.currentQuestion;
+            const existingAnswer = this.answers.find((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
 
-            const existingNewAnswerIndex = this.newAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
-            if (existingNewAnswerIndex !== -1) this.newAnswers.splice(existingNewAnswerIndex, 1)
-            const existingModifiedAnswerIndex = this.modifiedAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId)
-            if (existingModifiedAnswerIndex !== -1) this.modifiedAnswers.splice(existingModifiedAnswerIndex, 1)
+            const existingNewAnswerIndex = this.newAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+            if (existingNewAnswerIndex !== -1) this.newAnswers.splice(existingNewAnswerIndex, 1);
+            const existingModifiedAnswerIndex = this.modifiedAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+            if (existingModifiedAnswerIndex !== -1) this.modifiedAnswers.splice(existingModifiedAnswerIndex, 1);
 
             if (value) {
-                const newAnswer = { PartyId: partyId, QuestionId: currentQuestion.id, agreeLevel: parseInt(value) }
-                console.log('existing:', !!existingAnswer, 'answer:', newAnswer)
-                if (!!existingAnswer) this.modifiedAnswers.push(newAnswer)
-                else this.newAnswers.push(newAnswer)
+                const newAnswer = { PartyId: partyId, QuestionId: currentQuestion.id, agreeLevel: parseInt(value) };
+                console.log('existing:', !!existingAnswer, 'answer:', newAnswer);
+                if (existingAnswer) this.modifiedAnswers.push(newAnswer);
+                else this.newAnswers.push(newAnswer);
             }
         },
         async sendAnswers() {
-            console.log('sending these:', this.newAnswers)
+            console.log('sending these:', this.newAnswers);
             apiPost({url: 'answers', body: this.newAnswers});
             this.modifiedAnswers.forEach(a => {
-                apiPost({url: `answers/${a.QuestionId}/${a.PartyId}`, body: a, method: 'PUT'})
-            })
+                apiPost({url: `answers/${a.QuestionId}/${a.PartyId}`, body: a, method: 'PUT'});
+            });
             this.newAnswers = [];
             this.modifiedAnswers = [];
             this.answers = await apiGet({ url: 'answers' });

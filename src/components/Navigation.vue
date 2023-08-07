@@ -30,27 +30,14 @@
     </nav>
 </template>
 
-<script>
+<script setup lang="ts">
 import { MenuIcon } from '@heroicons/vue/solid';
 import RouterLinks from './RouterLinks.vue';
-import icon from '../assets/icon.png'
+import icon from '../assets/icon.png';
+import { ref } from 'vue';
 
-export default {
-    name: 'Navigation',
-    components: {
-        RouterLinks,
-        MenuIcon,
-    },
-    data() {
-        return {
-            showMenu: false,
-            icon
-        };
-    },
-    methods: {
-        toggleNavbar() {
-            this.showMenu = !this.showMenu;
-        },
-    },
+const showMenu = ref(false);
+const toggleNavbar = () => {
+    showMenu.value = !showMenu.value;
 };
 </script>

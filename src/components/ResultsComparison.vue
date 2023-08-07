@@ -55,15 +55,18 @@
 
 <script setup lang="ts">
 import { getPartyAgreePercentage } from "@/utils/calculations";
-import { ref } from "vue";
+import { PropType, ref } from "vue";
 import locationMarker from '../assets/locationMarker.svg';
 import { useRouter } from "vue-router";
+import useQuizStore from "@/store";
+import { IPartyWithOrientation } from "@/api";
 
 const router = useRouter();
+const store = useQuizStore();
 
-defineProps({
+const props = defineProps({
     parties: {
-        type: Object,
+        type: Array as PropType<IPartyWithOrientation[]>,
         required: true,
     }
 });
@@ -71,14 +74,17 @@ const results = ref([] as any);
 const bigParties = ['SPOLU', 'Piráti+STAN', 'ANO', 'SPD'] as const;
 const smallParties = ['PŘÍSAHA', 'ČSSD', 'KSČM', 'TSS'] as const;
 
-if (!(this as any).$store.state.quizCompleted) {
-    router.push({ name: 'Test' });
+(() => {
+    if (!store.quizCompleted) {
+        router.push({ name: 'Test' });
+    }
+    props.parties.forEach((party) => {
+        const percentage = getPartyAgreePercentage(party.Answers, store.answers);
+        results.value.push({party, percentage});
+    });
+    results.value.sort((a, b) => b.percentage - a.percentage);
 }
-(this as any).parties.forEach((party: any) => {
-    const percentage = getPartyAgreePercentage(party.Answers, (this as any).$store.state.answers);
-    results.value.push({party, percentage});
-});
-results.value.sort((a: any, b: any) => b.percentage - a.percentage);
+)();
 </script>
 
 <style scoped>

@@ -13,7 +13,7 @@ export interface IParty {
 }
 
 export interface IPartyWithAnswers extends IParty {
-    Answers: []
+    Answers: any[]
 }
 
 export type IPartyWithOrientation = IPartyWithAnswers & ICompassOrientation

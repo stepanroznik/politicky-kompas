@@ -33,7 +33,7 @@
             </span>
             <div class="grid grid-cols-6 gap-1">
                 <div
-                    v-for="(i, index) in reverseOrder"
+                    v-for="(i, index) in [5,4,3,2,1,undefined]"
                     :key="i"
                     class="border-2 rounded-md py-2"
                     :class="
@@ -83,11 +83,11 @@
                             <span 
                                 v-if="(i == party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel) || (!i && party.Answers.find((a) => a.Question.id === question.id)?.agreeLevel == 0)"
                                 class="h-10 w-10 block transform scale-90 opacity-70 group"
-                                :class="{ 'border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100': !party.isUser }"
-                                :style="{ backgroundImage: party.isUser ? `url(${locationMarker})` : `url(${import(`@/assets/parties/${party.id}.png`)})` }"
+                                :class="{ 'border-2 rounded-md bg-white bg-contain transition-all duration-150 hover:z-10 hover:duration-300 hover:scale-150 hover:opacity-100': !('isUser' in party) }"
+                                :style="{ backgroundImage: ('isUser' in party) ? `url(${locationMarker})` : `url(${import(`@/assets/parties/${party.id}.png`)})` }"
                             >
                                 <span
-                                    v-if="!party.isUser"
+                                    v-if="!('isUser' in party)"
                                     class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
                                 >
                                     <span class="">{{ party.name }}</span>
@@ -102,29 +102,20 @@
     <loading v-else />
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Loading from '@/components/Loading.vue';
-import { defineComponent } from 'vue';
-import { apiGet } from '../api/index';
-import locationMarker from '../assets/locationMarker.svg'
+import { IUserResult } from '@/interfaces/user-result.interface';
+import useQuizStore from '@/store';
+import { ref } from 'vue';
+import { IPartyWithAnswers, apiGet } from '../api/index';
+import locationMarker from '../assets/locationMarker.svg';
 
-export default defineComponent({
-    name: 'Answers',
-    components: { Loading },
-    data: function () {
-        return {
-            parties: [] as any[],
-            questions: [] as any[],
-            reverseOrder: [5,4,3,2,1,undefined],
-            locationMarker
-        };
-    },
-    computed: {},
-    async created() {
-        this.questions = await apiGet({ url: 'questions' });
-        this.parties = [ ...(this as any).$store.state.parties, { Answers: (this as any).$store.state.answers, isUser: true } ]
-        console.log('parties with user', this.parties)
-    },
-    methods: {},
-});
+const store = useQuizStore();
+
+const parties = ref([] as (IPartyWithAnswers | IUserResult)[]);
+const questions = ref([]);
+
+questions.value = await apiGet({ url: 'questions' });
+parties.value = [ ...store.parties, { Answers: store.answers, isUser: true } ];
+console.log('parties with user', parties.value);
 </script>

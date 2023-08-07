@@ -4,12 +4,6 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import Quiz from '../components/Quiz.vue';
-
-export default {
-    name: 'Test',
-    components: { Quiz },
-};
-
 </script>

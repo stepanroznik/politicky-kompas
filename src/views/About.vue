@@ -36,16 +36,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import aboutImage from '../assets/compass.png'
+<script setup lang="ts">
+import aboutImage from '../assets/compass.png';
 
-export default defineComponent({
-    name: 'About',
-    data: function() {
-        return {
-            websites: ['2021.programydovoleb.cz/volebni-kalkulacka', 'irozhlas.cz/volebni-kompas-2021', 'zpravy.aktualne.cz/domaci/r~6c11947803f211eca1070cc47ab5f122/', 'volebnikalkulacka.cz/', 'idnes.cz/volby/kalkulacka', '8values.github.io/'] as string[],
-            aboutImage
-        }},
-});
+const websites = ['2021.programydovoleb.cz/volebni-kalkulacka', 'irozhlas.cz/volebni-kompas-2021', 'zpravy.aktualne.cz/domaci/r~6c11947803f211eca1070cc47ab5f122/', 'volebnikalkulacka.cz/', 'idnes.cz/volby/kalkulacka', '8values.github.io/'];
 </script>

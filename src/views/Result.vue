@@ -29,26 +29,20 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import Compass from "@/components/Compass.vue";
-import Comparison from "@/components/ResultsComparison.vue";
-import { defineComponent } from "vue";
 import GeoOrientation from "@/components/GeoOrientation.vue";
+import Comparison from "@/components/ResultsComparison.vue";
+import useQuizStore from "@/store";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
-export default defineComponent({
-    name: 'Result',
-    components: { Compass, Comparison, GeoOrientation },
-    data: function() {
-        return {
-            parties: [] as any[],
-        };},
-    computed: {},
-    async created() {
-        if (!(this as any).$store.state.quizCompleted) {
-            this.$router.push({ name: 'Test' });
-        }
-        this.parties = (this as any).$store.state.parties;
-    },
-    methods: {}
-});
+const store = useQuizStore();
+const router = useRouter();
+
+const parties = computed(() => store.parties);
+
+if (!store.quizCompleted) {
+    router.push({ name: 'Test' });
+}
 </script>

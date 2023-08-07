@@ -1,14 +1,16 @@
 <template>
     <div class="relative border-4 border-gray-400 rounded">
         <axis-label class="absolute -top-6 left-1/2 z-20 transform -translate-x-1/2">
-            Autoritářství<span
-                class="hidden lg:inline"
-            >&nbsp;/ přísná pravidla</span>
+            Autoritářství
+            <span class="hidden lg:inline">
+                &nbsp;/ přísná pravidla
+            </span>
         </axis-label>
         <axis-label class="absolute -bottom-6 left-1/2 z-20 transform -translate-x-1/2">
-            Libertariánství<span
-                class="hidden lg:inline"
-            >&nbsp;/ osobní svoboda</span>
+            Libertariánství
+            <span class="hidden lg:inline">
+                &nbsp;/ osobní svoboda
+            </span>
         </axis-label>
         <axis-label class="absolute left-0 top-1/2 z-20 -mt-4 transform lg:-translate-x-1/2">
             Levice
@@ -39,17 +41,17 @@
                             v-for="party in parties"
                             :key="party.id"
                         >
-                            <span
+                            <PartyIcon
                                 v-if="y === party.leftRight + 6 && x === party.topBottom + 6"
                                 class="group h-full w-full absolute block bg-contain border-2 rounded-md bg-white transform transition-all duration-150 hover:duration-300 scale-90 z-10 hover:z-30 hover:scale-150 opacity-70 hover:opacity-100"
-                                :style="{ backgroundImage: `url(${import(`@/assets/parties/${party.id}.png`)})` }"
+                                :party-id="party.id"
                             >
                                 <span
                                     class="party-name transition-all opacity-0 group-hover:opacity-90 hidden group-hover:inline-block overflow-visible absolute bg-white rounded"
                                 >
-                                    <span class="">{{ party.name }}</span>
+                                    <span>{{ party.name }}</span>
                                 </span>
-                            </span>
+                            </PartyIcon>
                         </template>
                         <span
                             v-if="userCompassOrentation && y === userCompassOrentation.leftRight + 6 && x === userCompassOrentation.topBottom + 6"
@@ -71,6 +73,7 @@ import locationMarker from "../assets/locationMarker.svg";
 import AxisLabel from "./AxisLabel.vue";
 import { IPartyWithOrientation } from "@/api";
 import useQuizStore from "@/store";
+import PartyIcon from "./PartyIcon.vue";
 
 defineProps({
     parties: {
