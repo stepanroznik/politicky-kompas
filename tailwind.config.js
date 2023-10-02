@@ -1,11 +1,5 @@
 module.exports = {
-    purge: {
-        enabled: true,
-        content: ['./src/**/*.vue', './public/index.html'],
-        options: {
-            safelist: [],
-        },
-    },
+    content: ['./src/**/*.vue', './public/index.html'],
     theme: {
         extend: {
             gridTemplateRows: {
