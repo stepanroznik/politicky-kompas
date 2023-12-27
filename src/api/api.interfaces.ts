@@ -1,14 +1,14 @@
 export interface IUrlParams {
     url: string;
-    query?: any;
+    query?: Record<string, any>;
 }
 
 export interface IGetParams extends IUrlParams {
-    headers?: any;
+    headers?: Record<string, any>;
 }
 
 export interface IPostParams extends IUrlParams {
     method?: 'POST' | 'PUT'
     body?: any;
-    headers?: any;
+    headers?: Record<string, any>;
 }

@@ -15,8 +15,8 @@
                     max="5"
                     min="1"
                     class="w-16"
-                    :value="answers.find((a) => a.QuestionId === currentQuestion.id && a.PartyId === party.id)?.agreeLevel"
-                    @change="changeAgreeLevel(party.id, $event.target.value)"
+                    :value="answers.find((a) => a.QuestionId === currentQuestion!.id && a.PartyId === party.id)?.agreeLevel"
+                    @change="changeAgreeLevel(party.id, ($event.target as any).value)"
                 >
             </span>
         </span>
@@ -43,23 +43,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { apiGet, apiPost } from '../api/index';
+import { IPartyWithOrientation, apiGet, apiPost } from '../api/index';
+import { IQuestion, IAnswer } from '@/interfaces/question-answer.interfaces';
 
 export default defineComponent({
     name: 'Answers',
-    data: function () {
+    data() {
         return {
             index: 0,
-            parties: [] as any[],
-            questions: [] as any[],
-            answers: [] as any[],
-            newAnswers: [] as any[],
-            modifiedAnswers: [] as any[],
+            parties: [] as IPartyWithOrientation[],
+            questions: [] as IQuestion[],
+            answers: [] as IAnswer[],
+            newAnswers: [] as IAnswer[],
+            modifiedAnswers: [] as IAnswer[],
         };
     },
     computed: {
-        currentQuestion() {
-            return (this as any).questions[(this as any).index];
+        currentQuestion(): IQuestion | undefined {
+            return this.questions[this.index];
         }
     },
     async created() {
@@ -68,18 +69,19 @@ export default defineComponent({
         this.answers = await apiGet({ url: 'answers' });
     },
     methods: {
-        changeAgreeLevel(partyId: number, value: string) {
-            const currentQuestion: any = this.currentQuestion;
-            const existingAnswer = this.answers.find((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+        changeAgreeLevel(partyId: string, value: string) {
+            const currentQuestion = this.currentQuestion;
+            if (!currentQuestion) return;
 
-            const existingNewAnswerIndex = this.newAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+            const existingAnswer = this.answers.find(a => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+
+            const existingNewAnswerIndex = this.newAnswers.findIndex(a => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
             if (existingNewAnswerIndex !== -1) this.newAnswers.splice(existingNewAnswerIndex, 1);
-            const existingModifiedAnswerIndex = this.modifiedAnswers.findIndex((a: any) => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
+            const existingModifiedAnswerIndex = this.modifiedAnswers.findIndex(a => a.QuestionId === currentQuestion.id && a.PartyId === partyId);
             if (existingModifiedAnswerIndex !== -1) this.modifiedAnswers.splice(existingModifiedAnswerIndex, 1);
 
             if (value) {
-                const newAnswer = { PartyId: partyId, QuestionId: currentQuestion.id, agreeLevel: parseInt(value) };
-                console.log('existing:', !!existingAnswer, 'answer:', newAnswer);
+                const newAnswer: IAnswer = { PartyId: partyId, QuestionId: currentQuestion.id, agreeLevel: parseInt(value) };
                 if (existingAnswer) this.modifiedAnswers.push(newAnswer);
                 else this.newAnswers.push(newAnswer);
             }

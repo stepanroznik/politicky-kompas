@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ICompassOrientation } from "@/interfaces/compass-orientation.inteface";
+import { ICompassOrientation } from "@/interfaces/compass-orientation.interface";
 import { getPartyOrientation } from "@/utils/calculations";
 import { PropType, ref } from "vue";
 import locationMarker from "../assets/locationMarker.svg";

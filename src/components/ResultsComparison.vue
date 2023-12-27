@@ -20,9 +20,9 @@
                     </span>
                     <span class="flex text-sm text-gray-400 group">
                         <span class="shadow-md text-sm font-medium text-gray-600 z-10 select-none absolute left-1/2 top-1/2 -translate-y-1/2 bg-white rounded py-1 px-2 mr-0.5 transition-all transform -translate-x-1/2 scale-x-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-                            {{ 
-                                (bigParties.includes(result.party.abbreviation)) ? 'Zaručeně projde do sněmovny' :
-                                (smallParties.includes(result.party.abbreviation)) ? 'Malá šance na postup do sněmovny' :
+                            {{
+                                (bigParties.some(party => party === result.party.abbreviation)) ? 'Zaručeně projde do sněmovny' :
+                                (smallParties.some(party => party === result.party.abbreviation)) ? 'Malá šance na postup do sněmovny' :
                                 'Téměř nulová šance na postup do sněmovny'
                             }}
                         </span>
@@ -36,15 +36,15 @@
                                 <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                             </svg>
                             {{
-                                (bigParties.includes(result.party.abbreviation)) ? '> 99' :
-                                (smallParties.includes(result.party.abbreviation)) ? '&lt; 50' :
+                                (bigParties.some(party => party === result.party.abbreviation)) ? '> 99' :
+                                (smallParties.some(party => party === result.party.abbreviation)) ? '&lt; 50' :
                                 '&lt; 1'
                             }}
                         </span>
                     </span>
                 </dd>
             </span>
-            <span 
+            <span
                 v-if="!index"
                 class="h-10 w-10 block absolute right-4 top-1/2 transform -translate-y-1/2"
                 :style="{backgroundImage: `url(${locationMarker})`}"
@@ -54,16 +54,12 @@
 </template>
 
 <script setup lang="ts">
-import { getPartyAgreePercentage } from "@/utils/calculations";
 import { PropType, ref } from "vue";
 import locationMarker from '../assets/locationMarker.svg';
 import { useRouter } from "vue-router";
 import useQuizStore from "@/store";
-import { IPartyWithOrientation } from "@/api";
+import { IPartyWithOrientation, bigParties, smallParties } from "@/api";
 import PartyIcon from "./PartyIcon.vue";
-
-const bigParties = ['SPOLU', 'Piráti+STAN', 'ANO', 'SPD'] as const;
-const smallParties = ['PŘÍSAHA', 'ČSSD', 'KSČM', 'TSS'] as const;
 
 const router = useRouter();
 const store = useQuizStore();
@@ -74,7 +70,7 @@ const props = defineProps({
         required: true,
     }
 });
-const results = ref([] as any);
+const results = ref([] as { party: IPartyWithOrientation, percentage: number }[]);
 (() => {
     if (!store.quizCompleted) {
         router.push({ name: 'Test' });

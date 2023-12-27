@@ -1,4 +1,6 @@
+import { IAnswerWithQuestion } from "./question-answer.interfaces";
+
 export interface IUserResult {
-    Answers: any[];
+    Answers: IAnswerWithQuestion[];
     isUser: true;
 }

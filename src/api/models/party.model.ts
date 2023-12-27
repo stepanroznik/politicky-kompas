@@ -1,7 +1,8 @@
 import useQuizStore from "@/store";
 import { apiGet } from "../common.api";
 import { getPartyOrientation } from "@/utils/calculations";
-import { ICompassOrientation } from "@/interfaces/compass-orientation.inteface";
+import { ICompassOrientation } from "@/interfaces/compass-orientation.interface";
+import { IAnswerWithQuestion } from "@/interfaces/question-answer.interfaces";
 
 export interface IParty {
     createdAt: string;
@@ -9,14 +10,17 @@ export interface IParty {
     deletedAt: string;
     id: string;
     name: string;
-    abbreviation: string;
+    abbreviation: typeof bigParties[number] | typeof smallParties[number];
 }
 
 export interface IPartyWithAnswers extends IParty {
-    Answers: any[]
+    Answers: IAnswerWithQuestion[]
 }
 
 export type IPartyWithOrientation = IPartyWithAnswers & ICompassOrientation
+
+export const bigParties = ['SPOLU', 'Piráti+STAN', 'ANO', 'SPD'] as const;
+export const smallParties = ['PŘÍSAHA', 'ČSSD', 'KSČM', 'TSS'] as const;
 
 export class PartyModel {
     static async fetchLatest() {
